@@ -1,0 +1,184 @@
+
+.splashpage-container {
+    margin-bottom: 10%;
+    
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(246,245,244);
+    width: 100%;
+    height: 62px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999
+}
+
+.leftnav-container {
+    display: flex;
+    gap: 15px;
+    margin-left: 1%;
+    margin-top: 1%;
+    line-height: 24px;
+}
+
+.product-dropdown {
+    z-index: 1;
+    position: absolute;
+    top: 50px;
+    left: 110px;
+    height: 350px;
+    width: 270px;
+    border-radius: 8px;
+    background-color: white;
+    border: 1px solid #ccc;
+    display: block;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.product-dropdownmenu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.product-details-dropdownmenu {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    text-decoration: none;
+    color: black;
+    font-weight: 544;
+    line-height: 22.5px;
+
+}
+
+.product-details-dropdownmenu:hover {
+    background-color: #f5f5f5
+}
+
+.product-details-info {
+    color: gray;
+    font-size: 14px;
+    
+}
+
+
+.rightnav-container {
+    display: flex;
+    gap: 12px;
+    margin-right: 1%;
+    margin-top: 1%;
+}
+
+
+
+
+.dropdown-icon {
+    font-size: 10px;
+}
+
+.splash-navlink {
+    text-decoration: none solid rgb(5, 5, 5);
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    color: rgb(5, 5, 5);
+    font-size: 16px;
+}
+
+.splash-navlink:hover {
+    color:  #80bfff;
+}
+
+.wiki {
+    display: flex;
+    align-items: center;
+    
+}
+
+
+
+.product-details-dropdownmenu img {
+    margin-right: 6px;
+    display: flex;
+    align-content: start;
+    height: 35px;
+    width: 35px;
+}
+
+.product-details-right {
+    margin-left: 5px;
+}
+
+.dropdown-container {
+    display: none;
+    position: absolute;
+    /* Add other styling for your dropdown container as needed */
+  }
+
+.splashpage-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin-top: 7%;
+    padding-bottom: 100px;
+}
+
+.title-img {
+    height: 190px;
+    
+}
+
+.title-caption {
+    width: 500px;
+    font-size: 24px;
+    font-family: sans-serif;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+    color: rgb(5, 5, 5)
+}
+
+.splash-signup {
+    background-color: rgb(18, 18, 18);
+    color: white;
+    border-radius: 5px;
+    height: 36px;
+    width: 210px;
+    margin-top: 25px;
+    font-size: 16px;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    cursor: pointer;
+}
+
+.millions {
+    font-weight: 700;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 45px;
+    margin-top: 15px;
+}
+
+.powering {
+    font-weight: bold;
+    line-height: 23px;
+    font-size: 16px;
+    font-family:  sans-serif;
+    color: rgb(5, 5, 5);
+    width: 490px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.try {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    text-decoration: none;
+    color: black;
+}
+
+.try:hover {
+    color:  #80bfff;
+}
+

@@ -1,31 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
-import SignupFormPage from "./components/SignupFormPage";
-import LoginFormPage from "./components/LoginFormPage";
-import { authenticate } from "./store/session";
-import Navigation from "./components/Navigation";
+import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import Navigation from './components/SplashPage/Navigation';
+import SplashPage from './components/SplashPage/SplashPage'
+import Login from './components/Authentication/Login';
+import Signup from './components/Authentication/Signup';
+import WorkSpaces from './components/WorkSpaces/WorkSpaces';
+
+
 
 function App() {
-  const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {
-    dispatch(authenticate()).then(() => setIsLoaded(true));
-  }, [dispatch]);
-
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
-        <Switch>
-          <Route path="/login" >
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-        </Switch>
-      )}
+      <Routes>
+        <Route exact path ="/" element={<SplashPage/>}></Route>
+        <Route path="/pricing"></Route>
+        <Route path="/login" element={<Login/>}></Route>
+        <Route path="/signup" element={<Signup/>}></Route>
+        <Route path="/home" element={<WorkSpaces/>}></Route>
+      </Routes>
     </>
   );
 }

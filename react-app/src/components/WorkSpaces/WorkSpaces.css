@@ -1,0 +1,114 @@
+.dashboard-container {
+    color: rgba(25, 23, 17, 0.6);
+    box-sizing: border-box;
+    overflow: auto;
+    overflow-x: hidden;
+    border-right: 1px solid #F0F0F0;
+    width: 300px;
+    height: 100%;
+    padding: 10px;
+    background-color: #FBFBFA;
+    max-width: 400px;
+    position: relative;
+    min-height: 100vh;
+    outline-color: rgba(25, 23, 17, 0.6);
+    transition: border-color 0.3s;
+    padding-left: 1%;
+}
+  
+
+.dashboard-container:hover {
+    border-right: 1px solid #D0D0D0;
+}
+
+.dashboard-content {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+}
+
+
+.workspace-user {
+    padding-left: 6px;
+    color: rgb(55, 53, 47);
+}
+  
+.workspace-container {
+    height: 100%;
+}
+  
+.resizer {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    width: 10px;
+    height: 100%;
+    cursor: col-resize;
+    z-index: 1;
+}
+
+.search {
+    border-style: none;
+    background-color: #FBFBFA;
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    color: rgba(25, 23, 17, 0.8);
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+}
+
+.search:hover {
+    background-color: #ECECEC;
+}
+
+.dashboard-3buttons {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+}
+
+
+
+.dashboard-bottom4 {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-content: center;
+}
+
+.newpage-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border-top: 1px solid #D0D0D0;
+    height: 45px;
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    
+}
+
+.newpage-button {
+    color: rgba(25, 23, 17, 0.6);
+    font-size: 15px;
+    background-color: #FBFBFA;
+    border-style: none;
+    font-weight: 500;
+    line-height: 21px;
+    padding-left: 15px;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    cursor: pointer;
+}
+
+.newpage-container:hover {
+    background-color: #ECECEC
+}
+
+.newpage-button:hover {
+    background-color: #ECECEC
+}
+
