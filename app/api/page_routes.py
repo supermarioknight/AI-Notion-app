@@ -5,29 +5,54 @@ from flask_login import login_required, current_user
 
 page_routes = Blueprint('pages', __name__)
 
+
 @page_routes.route('/<int:id>', methods=["PUT"])
 @login_required
 def update_a_page_by_page_id(id):
     """Route for updating a page by page id"""
+    res = request.get__json()
+
     page = Page.query.get(id)
 
+    page.name = res['name']
 
-    if page is None or page.workspace.user_id != current_user.id:
-        return {"error": "Page not found or unauthorized"}, 404
-    
-    if "name" in request.json:
-        page.name = request.json["name"]
+    for block in page.blocks:
+        block_id = block.block_id
+        block_content = res['blocks'].get(str(block_id))
 
-    if "template_id" in request.json:
-        template_id = request.json["template_id"]
-        template = Template.query.get(template_id)
-        if template is None or template.workspace_id != page.workspace_id:
-            return {"error": "Template not found or unauthorized"}, 404
-        page.template_id = template_id
+        if block_content:
+            block.content = block_content
     
     db.session.commit()
 
     return page.to_dict()
+
+@page_routes.route('/', methods=["POST"])
+@login_required
+def create_a_page_by_workspace_id():
+    """Route for creating a page by workspace by id"""
+    res = request.get_json()
+
+    create_page = Page(
+        workspace_id = res['workspace_id'],
+        name = res['name']
+    )
+
+    db.session.add(create_page)
+    db.session.flush()
+
+    blocks = []
+    for block_data in res["blocks"]:
+        block = Block(
+            page_id = create_page.page_id,
+            content = block_data["content"]
+        )
+    
+    blocks.append(block)
+    db.session.add(block)
+
+    return create_page.to_dict()
+
 
 @page_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
@@ -44,14 +69,4 @@ def delete_a_page_by_page_id(id):
     return "Successfully Deleted"
 
 
-
-@page_routes.route('/<int:id>')
-@login_required
-def get_all_blocks_by_page_id(id):
-    """get all blocks by page id"""
-    page = Page.query.get(id)
-
-    blocks = Block.filter_by(page_id=id).all()
-
-    return {"page": page.to_dict(), "blocks": [b.to_dict() for b in blocks]} 
 

@@ -1,6 +1,9 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .workspaces import seed_workspaces, undo_workspaces
+from .templates import seed_templates, undo_templates
+from .pages import seed_pages, undo_pages
+from .blocks import seed_blocks, undo_blocks
 
 from app.models.db import db, environment, SCHEMA
 
@@ -19,8 +22,16 @@ def seed():
         # Make sure to add all your other model's undo functions below
         undo_users()
         undo_workspaces()
+        undo_pages()
+        undo_templates()
+        undo_blocks()
+
     seed_users()
     seed_workspaces()
+    seed_pages()
+    seed_templates()
+    seed_blocks()
+    
     # Add other seed functions here
 
 
@@ -29,4 +40,7 @@ def seed():
 def undo():
     undo_users()
     undo_workspaces()
+    undo_pages()
+    undo_templates()
+    undo_blocks()
     # Add other undo functions here

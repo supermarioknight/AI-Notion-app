@@ -21,6 +21,7 @@ def get_all_templates():
 def get_new_user_templates():
     """Route for getting templates for a new user """
 
+
 @template_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def delete_a_template(id):
@@ -43,7 +44,13 @@ def edit_a_template(id):
     template = Template.query.get(id)
 
     template.name = res['name']
-    template.content = res['content']
+    
+    for block in template.blocks:
+        block_id = block.block_id
+        block_content = res['blocks'].get(str(block_id))
+
+        if block_content: 
+            block.content = block_content
 
     db.session.commit()
 
@@ -57,11 +64,25 @@ def create_a_template():
     res = request.get__json()
     
     create_template = Template(
-        name = res["name"],
-        content = res["content"]
+        name=res['name']
     )
 
     db.session.add(create_template)
+    db.session.flush()
+
+    blocks = []
+    for block_data in res["blocks"]:
+        block = Block(
+            page_id = None,
+            template_id = create_template.template_id,
+            content=block_data["content"]
+        )
+        blocks.append(block)
+        db.session.add(block)
+
+    db.session.commit()
+
+    create_template.blocks = blocks
     db.session.commit()
 
     return create_template.to_dict()

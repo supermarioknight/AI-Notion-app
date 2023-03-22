@@ -33,27 +33,6 @@ def pages_by_workspace_id(id):
     return [p.to_dict() for p in pages] 
 
 
-
-
-@workspace_routes.route('/<int:id>/pages', methods=["POST"])
-@login_required
-def create_a_page_by_workspace_id(id):
-    """Route for creating a page by workspace by id"""
-    res = request.get_json()
-
-    create_page = Page(
-        workspace_id = id,
-        template_id = res['template_id'],
-        name = res['name']
-    )
-
-    db.session.add(create_page)
-    db.session.commit()
-
-    return create_page.to_dict()
-
-
-
 @workspace_routes.route('/', methods=['POST'])
 @login_required
 def create_workspace_by_user_id(): 
