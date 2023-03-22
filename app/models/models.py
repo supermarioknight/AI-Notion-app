@@ -4,7 +4,7 @@ from flask_login import UserMixin
 
 
 class User(db.Model, UserMixin):
-    __tablename__ = 'Users'
+    __tablename__ = 'users'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
@@ -40,13 +40,13 @@ class User(db.Model, UserMixin):
 ## Workspace Models
 
 class Workspace(db.Model):
-    __tablename__ = 'Workspaces'
+    __tablename__ = 'workspaces'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
     workspace_id = db.Column(db.Integer, primary_key=True, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("Users.id")), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     name = db.Column(db.String(100), nullable=False)
 
     users = db.relationship("User", back_populates="workspaces")
@@ -61,14 +61,14 @@ class Workspace(db.Model):
 
 ## Page Models
 class Page(db.Model):
-    __tablename__ = 'Pages'
+    __tablename__ = 'pages'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
     page_id = db.Column(db.Integer, primary_key=True, nullable=False)
-    workspace_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("Workspaces.workspace_id")), nullable=False)
-    template_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("Templates.template_id")), nullable=False) 
+    workspace_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("workspaces.workspace_id")), nullable=False)
+    template_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("templates.template_id")), nullable=False) 
     name = db.Column(db.String(255), nullable=False)
 
     workspaces = db.relationship('Workspace', back_populates="pages")
@@ -86,7 +86,7 @@ class Page(db.Model):
 
 ## Template Models
 class Template(db.Model):
-    __tablename__ = 'Templates'
+    __tablename__ = 'templates'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
@@ -107,14 +107,14 @@ class Template(db.Model):
 
 ## Blocks Models
 class Block(db.Model):
-    __tablename__ = 'Blocks'
+    __tablename__ = 'blocks'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
     
     block_id = db.Column(db.Integer, primary_key=True, nullable=False)
-    page_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("Pages.page_id")), nullable=False)
-    template_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("Templates.template_id")), nullable=True) 
+    page_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("pages.page_id")), nullable=False)
+    template_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("templates.template_id")), nullable=True) 
     content = db.Column(db.JSON, nullable=True)
 
     pages = db.relationship("Page", back_populates = "blocks")
