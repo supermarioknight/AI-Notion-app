@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
@@ -7,7 +7,7 @@ import { login } from '../../store/session'
 export default function Signup() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const sessionUser = useSelector((state) => state.session.user);
+  // const sessionUser = useSelector((state) => state.session.user);
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
