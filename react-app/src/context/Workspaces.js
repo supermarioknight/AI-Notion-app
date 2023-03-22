@@ -1,7 +1,14 @@
-import React, { useRef, useState, useContext }  from 'react'
+import React, { useRef, useState, useContext, createContext, useEffect }  from 'react'
 
-export default function WorkspacesProvider() {
+export const WorkspacesContext = createContext()
+export const useWorkspacesAPI = () => useContext(WorkspacesContext)
+
+export default function WorkspacesProvider({children}) {
+  
+
   return (
-    <div>Workspaces</div>
+    <div>
+      
+    </div>
   )
 }
