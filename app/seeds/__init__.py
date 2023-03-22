@@ -22,14 +22,14 @@ def seed():
         # Make sure to add all your other model's undo functions below
         undo_users()
         undo_workspaces()
-        undo_pages()
         undo_templates()
+        undo_pages()
         undo_blocks()
 
     seed_users()
     seed_workspaces()
-    seed_pages()
     seed_templates()
+    seed_pages()
     seed_blocks()
     
     # Add other seed functions here
@@ -40,7 +40,8 @@ def seed():
 def undo():
     undo_users()
     undo_workspaces()
-    undo_pages()
     undo_templates()
+    undo_pages()
+
     undo_blocks()
     # Add other undo functions here
