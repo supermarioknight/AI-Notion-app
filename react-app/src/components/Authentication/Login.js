@@ -7,7 +7,7 @@ import { login } from '../../store/session'
 export default function Login() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const sessionUser = useSelector((state) => state.session.user);
+  // const sessionUser = useSelector((state) => state.session.user);
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
