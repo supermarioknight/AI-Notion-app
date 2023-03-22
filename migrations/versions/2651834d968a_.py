@@ -1,10 +1,13 @@
-"""create_users_table
-Revision ID: ffdc0a98111c
-Revises:
-Create Date: 2020-11-20 15:06:02.230689
+"""empty message
+
+Revision ID: 2651834d968a
+Revises: 
+Create Date: 2023-03-22 14:05:55.970379
+
 """
 from alembic import op
 import sqlalchemy as sa
+
 
 import os
 environment = os.getenv("FLASK_ENV")
@@ -12,7 +15,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = 'ffdc0a98111c'
+revision = '2651834d968a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,7 +30,6 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE Templates SET SCHEMA {SCHEMA};")
-    # ### end Alembic commands ###qqqqqqqqq
 
     op.create_table('Users',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -41,7 +43,7 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE Users SET SCHEMA {SCHEMA};")
-    # ### end Alembic commands ###qqqqqqqqq
+
     op.create_table('Workspaces',
     sa.Column('workspace_id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -52,7 +54,7 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE Workspaces SET SCHEMA {SCHEMA};")
-    # ### end Alembic commands ###qqqqqqqqq
+
     op.create_table('Pages',
     sa.Column('page_id', sa.Integer(), nullable=False),
     sa.Column('workspace_id', sa.Integer(), nullable=False),
@@ -65,7 +67,8 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE Pages SET SCHEMA {SCHEMA};")
-    # ### end Alembic commands ###qqqqqqqqq
+
+
     op.create_table('Blocks',
     sa.Column('block_id', sa.Integer(), nullable=False),
     sa.Column('page_id', sa.Integer(), nullable=False),
@@ -78,7 +81,6 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE Blocks SET SCHEMA {SCHEMA};")
-    # ### end Alembic commands ###qqqqqqqqq
     # ### end Alembic commands ###
 
 
