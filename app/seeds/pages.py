@@ -9,7 +9,13 @@ def seed_pages():
             {'page_id': 3, 'workspace_id': 1, 'template_id': 3, 'name': 'Reading List'},    
             {'page_id': 4, 'workspace_id': 1, 'template_id': 4, 'name': 'To-Dos'},    
             {'page_id': 5, 'workspace_id': 1, 'template_id': 5, 'name': 'Code Block'},   
-            {'page_id': 6, 'workspace_id': 1, 'template_id': 6, 'name': 'Tables'},    
+            {'page_id': 6, 'workspace_id': 1, 'template_id': 6, 'name': 'Tables'},
+            {'page_id': 7, 'workspace_id': 3, 'template_id': 7, 'name': 'Blank Page'},
+            {'page_id': 8, 'workspace_id': 3, 'template_id': 8, 'name': 'Blank Database'},
+            {'page_id': 9, 'workspace_id': 3, 'template_id': 9, 'name': 'Blank Kanban Template'},
+            {'page_id': 10, 'workspace_id': 3, 'template_id': 10, 'name': 'Blank Tables Template'},
+            {'page_id': 11, 'workspace_id': 3, 'template_id': 11, 'name': 'Blank Code Block Template'},        
+            {'page_id': 12, 'workspace_id': 3, 'template_id': 12, 'name': 'Blank List Template'}, 
         ]
 
     for page in pages:

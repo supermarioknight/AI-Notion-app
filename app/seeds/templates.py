@@ -9,6 +9,11 @@ def seed_templates():
         {'template_id': 4, 'name': 'To-Do Template'},
         {'template_id': 5, 'name': 'Code Block Template'},
         {'template_id': 6, 'name': 'Tables Template'},
+        {'template_id': 7, 'name': 'Blank Page Template'},
+        {'template_id': 8, 'name': 'Blank Database Template'},
+        {'template_id': 9, 'name': 'Blank To-Do Template'},
+        {'template_id': 10, 'name': 'Blank Tables Template'},
+        {'template_id': 11, 'name': 'Blank Code Block Template'}
     ]
 
     for template in templates:

@@ -50,7 +50,7 @@ class Workspace(db.Model):
     name = db.Column(db.String(100), nullable=False)
 
     users = db.relationship("User", back_populates="workspaces")
-    pages = db.relationship("Page", back_populates="workspaces")
+    pages = db.relationship("Page", back_populates="workspaces", cascade='all, delete, delete-orphan')
 
     def to_dict(self):
         return {
@@ -73,7 +73,7 @@ class Page(db.Model):
 
     workspaces = db.relationship('Workspace', back_populates="pages")
     template = db.relationship('Template', back_populates="pages")
-    blocks = db.relationship('Block', back_populates="pages")
+    blocks = db.relationship('Block', back_populates="pages", cascade='all, delete, delete-orphan')
 
     def to_dict(self):
         return {
@@ -101,7 +101,7 @@ class Template(db.Model):
         return {
             'template_id': self.template_id,
             'name': self.name,
-            'blocks': [block.to_dict() for block in self.blocks]
+            # 'blocks': [block.to_dict() for block in self.blocks]
         }
         
 
@@ -116,6 +116,7 @@ class Block(db.Model):
     page_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("pages.page_id")), nullable=False)
     template_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("templates.template_id")), nullable=True) 
     content = db.Column(db.JSON, nullable=True)
+    
 
     pages = db.relationship("Page", back_populates = "blocks")
     template = db.relationship("Template", back_populates="blocks", uselist=False)
@@ -124,7 +125,7 @@ class Block(db.Model):
         return {
             'block_id': self.block_id,
             'page_id': self.page_id,
-            'template': self.template.to_dict() if self.template else None,
+            'template_id': self.template_id,
             'content': self.content,
         }
 

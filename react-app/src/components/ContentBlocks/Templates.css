@@ -1,0 +1,25 @@
+.code {
+    background-color: rgb(247, 246, 243);
+    color: rgb(55, 53, 47);
+    height: 90px;
+    text-align: left;
+    padding-left: 3%;
+    padding-top: 3%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.text {
+    font-family: serif;
+    font-size: 17px;
+    color: rgb(55, 53, 47);
+    display: block;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}

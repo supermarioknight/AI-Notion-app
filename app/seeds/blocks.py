@@ -9,7 +9,7 @@ def seed_blocks():
         'page_id': 1, 
         'template_id': 1, 
         'content': {
-        "header": "Welcome to Idea Fusion!",
+        "header": ["Welcome to Idea Fusion!"],
         "text": [
         "Here are the basics:",
         "Click anywhere and just start typing",
@@ -18,7 +18,7 @@ def seed_blocks():
         "Click the + New Page button at the bottom of your sidebar to add a new page",
         "Click templates in your sidebar to get started with pre-built pages",
         "Press space to give the Idea Fusion AI a spin"
-        ]  
+            ],
         },
     },
     {
@@ -26,9 +26,9 @@ def seed_blocks():
         'page_id': 2,
         'template_id': 2,
         'content': {
-            'sections': [
+            'ordered_list': [
                 {
-                    'header': "Subjects I'm Studying",
+                    'header': ["Subjects I'm Studying"],
                     'list': [
                         "Biology",
                         "Calculus",
@@ -37,7 +37,7 @@ def seed_blocks():
                     ]
                 },
                 {
-                    'header': "Groceries",
+                    'header': ["Groceries"],
                     'list': [
                         "Ramen",
                         "Potatoes",
@@ -46,7 +46,7 @@ def seed_blocks():
                     ]
                 },
                 {
-                    'header': "Bills",
+                    'header': ["Bills"],
                     'list': [
                         "Utilities",
                         "Internet",
@@ -62,7 +62,7 @@ def seed_blocks():
         'page_id': 3,
         'template_id': 3,
         'content': {
-            "header": "Reading List",
+            "header": ["Reading List"],
             "database": {
                 "Name": [
                     "This Project is Hard",
@@ -75,7 +75,7 @@ def seed_blocks():
                     "Philosophy",
                     "Sports Management",
                     "Business Organization",
-                ]
+                ],
             }
         }
     },
@@ -84,7 +84,7 @@ def seed_blocks():
         'page_id': 4,
         'template_id': 4,
         'content': {
-            "header": "To-Do Board",
+            "header": ["To-Do Board"],
             "to-do": {
                 "To Do": [
                     "Pass this project",
@@ -107,8 +107,11 @@ def seed_blocks():
         'page_id': 5,
         'template_id': 5,
         'content': {
-            "header": "Code Block Template",
-            "code": "console.log('Hello World')"
+            "header": ["Code Block Template"],
+            "code": [
+                "console.log('Hello World')",
+                "def passcapstone(feature1, feature2):"
+            ]
         }
     },
     {
@@ -116,7 +119,7 @@ def seed_blocks():
         'page_id': 6,
         'template_id': 6,
         'content': {
-            "header": "Excel Like Tables Template",
+            "header": ["Excel Like Tables Template"],
             "table": {
                 "Companies": [
                     "Google",
@@ -139,7 +142,130 @@ def seed_blocks():
             }
         }
     },
-
+    {
+        'block_id': 7,
+        'page_id': 7,
+        'template_id': 7,
+        'content': {
+            "header": ["Untitled"],
+            "content": {
+                "text": [
+                    "Empty Page Where you can let your ideas run wild",
+                    "Feel free to use forward slash '/' to see all the available options to use"
+                ]
+            }
+        }
+    },
+    {
+        'block_id': 8,
+        'page_id': 1,
+        'template_id': 1,
+        'content': {
+            "text": ["You can write Code using code blocks like this"],
+            "code": ["print Hello"]
+        }
+    },
+    {
+        'block_id': 9,
+        'page_id': 9, 
+        'template_id': 9,
+        'content': {
+            "header": ["Template Kan-Ban Board"],
+            "to-do": {
+                "To Do": [
+                    "",
+                    "",
+                    "",
+                ],
+                "Doing": [
+                    "",
+                    "",
+                    "",
+                ],
+                "Done": [
+                    "",
+                    "",
+                    ""
+                ]
+            }
+        }
+    },
+    {
+        'block_id': 10,
+        'page_id': 10,
+        'template_id': 10,
+        'content': {
+            "header": ["Tables Template"],
+            "table": {
+                "Column 1": [
+                    "1",
+                    "2",
+                    "3",
+                    "4"
+                ],
+                "Column 2": [
+                    "A",
+                    "B",
+                    "C",
+                    "D"
+                ],
+                "Column 3": [
+                    "10",
+                    "20",
+                    "30",
+                    "40"
+                ],
+            }
+        }
+    },
+    {
+        'block_id': 11,
+        'page_id': 11,
+        'template_id': 11,
+        'content': {
+            "header": ["Code Block Template"],
+            "code": [
+                "console.log('Hello World')",
+                "def passcapstone(feature1, feature2):"
+            ]
+        }
+    },
+    {
+        'block_id': 12,
+        'page_id': 12,
+        'template_id': 12,
+        'content': {
+            'ordered_list': [
+                {
+                    'header': ["Subjects I'm Studying"],
+                    'list': [
+                        "Biology",
+                        "Calculus",
+                        "Computer Science",
+                        "Python"
+                    ]
+                },
+                {
+                    'header': ["Groceries"],
+                    'list': [
+                        "Ramen",
+                        "Potatoes",
+                        "Oranges",
+                        "Onions"
+                    ]
+                },
+                {
+                    'header': ["Bills"],
+                    'list': [
+                        "Utilities",
+                        "Internet",
+                        "Rent",
+                        "Girlfriend Expenses"
+                    ]
+                }
+            ]
+        }
+    },
 ]
 
     for block in blocks:

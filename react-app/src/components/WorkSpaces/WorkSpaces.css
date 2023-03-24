@@ -4,16 +4,16 @@
     overflow: auto;
     overflow-x: hidden;
     border-right: 1px solid #F0F0F0;
-    width: 300px;
-    height: 100%;
+    width: 340px;
+    height: 100vh;
     padding: 10px;
     background-color: #FBFBFA;
-    max-width: 400px;
     position: relative;
-    min-height: 100vh;
     outline-color: rgba(25, 23, 17, 0.6);
     transition: border-color 0.3s;
     padding-left: 1%;
+    flex-grow:1;
+    box-sizing: border-box;
 }
   
 
@@ -31,20 +31,32 @@
 .workspace-user {
     padding-left: 6px;
     color: rgb(55, 53, 47);
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+.workspace-user:hover {
+    background-color: #ECECEC
 }
   
 .workspace-container {
     height: 100%;
+    display: flex;
+    flex-direction: row;
 }
   
-.resizer {
-    position: absolute;
-    top: 0;
-    right: -5px;
-    width: 10px;
-    height: 100%;
-    cursor: col-resize;
-    z-index: 1;
+
+
+.workspace-input {
+    margin-right: 10px;
+}
+
+.workspace-create {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    border-style: none;
+    background-color: #FBFBFA;
 }
 
 .search {
@@ -53,7 +65,7 @@
     cursor: pointer;
     display: flex;
     gap: 10px;
-    color: rgba(25, 23, 17, 0.8);
+    color: rgba(25, 23, 17, 0.7);
     font-family: 'M PLUS Rounded 1c', sans-serif;
     align-items: center;
     font-size: 14px;
@@ -86,7 +98,7 @@
     left: 0;
     border-top: 1px solid #D0D0D0;
     height: 45px;
-    max-width: 400px;
+    max-width: 300px;
     width: 100%;
     display: flex;
     
@@ -112,3 +124,98 @@
     background-color: #ECECEC
 }
 
+.workspaces-dropdown-container {
+    z-index: 2;
+    position: absolute;
+    top: 30px;
+    left: 10px;
+    height: 260px;
+    width: 260px;
+    border-radius: 8px;
+    background-color: white;
+    border: 1px solid #ccc;
+    display: block;
+    padding-left: 10px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.workspaces-dropdown-menu {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    color: rgba(25, 23, 17, 0.8);
+    
+}
+
+.workspaces-dropdown-menu:hover {
+    background-color: #ECECEC
+}
+
+.pages-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    color: rgba(25, 23, 17, 0.7);
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.page-element {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.page-element:hover {
+    background-color: #ECECEC
+}
+
+.add-page {
+    cursor: pointer;
+}
+
+.add-page:hover {
+    background-color: #ECECEC
+}
+
+
+.hidden {
+    display: none;
+}
+
+.create-work {
+    border-top: solid 1px #c0c0c0;
+    padding-top: 10px;
+    color: rgba(25, 23, 17, 0.8);
+}
+
+.create-work:hover {
+    background-color: #ECECEC
+}
+
+.workspace-logout {
+    color: rgba(25, 23, 17, 0.8);
+}
+
+.workspace-logout:hover {
+    background-color: #ECECEC
+}
+
+.workspace-names {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.page-container {
+    flex-grow: 1;
+    overflow: auto;
+    margin-left: 6%;
+    margin-right: 6%;
+    margin-top: 10%;
+    width: calc(100% - 300px); /* Replace 300px with the width of your dashboard-container */
+    float: right; 
+}

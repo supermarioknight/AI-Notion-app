@@ -6,26 +6,50 @@ from flask_login import login_required, current_user
 page_routes = Blueprint('pages', __name__)
 
 
-@page_routes.route('/<int:id>', methods=["PUT"])
+@page_routes.route('/<int:id>')
 @login_required
-def update_a_page_by_page_id(id):
-    """Route for updating a page by page id"""
-    res = request.get__json()
+def pages_by_workspace_id(id):
+    """Route for getting all pages associated with a workspace"""
+    pages = Page.query.filter(Page.workspace_id == id).all()
 
-    page = Page.query.get(id)
+    return jsonify([p.to_dict() for p in pages])
 
-    page.name = res['name']
 
-    for block in page.blocks:
-        block_id = block.block_id
-        block_content = res['blocks'].get(str(block_id))
+# @page_routes.route('/<int:id>', methods=["PUT"])
+# @login_required
+# def update_a_page_by_page_id(id):
+#     """Route for updating a page by page id"""
+#     res = request.get__json()
 
-        if block_content:
-            block.content = block_content
+#     page = Page.query.get(id)
+
+#     page.name = res['name']
+
+#     for block in page.blocks:
+#         block_id = block.block_id
+#         block_content = res['blocks'].get(str(block_id))
+
+#         if block_content:
+#             block.content = block_content
     
-    db.session.commit()
+#     db.session.commit()
 
-    return page.to_dict()
+#     return page.to_dict()
+
+@page_routes.route('/active/<int:id>')
+@login_required
+def get_page_content_by_id(id):
+    """Route for getting the content of a page by its id"""
+    page = Page.query.filter_by(page_id=id).first()
+
+    if not page:
+        return "Specified page does not exist"
+
+    content = []
+    for block in page.blocks:
+        content.append(block.content)
+    
+    return jsonify({"blocks": content, "page_id": id})
 
 @page_routes.route('/', methods=["POST"])
 @login_required
