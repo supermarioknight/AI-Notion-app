@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Navigation from './Navigation'
 import './SplashPage.css'
 import NotionTitle from './notiontitle.PNG'
@@ -6,14 +6,20 @@ import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import SplashImage from './SplashImage.PNG'
 import Companies from './companies.PNG'
-
+import { authenticate } from '../../store/session'
+import { useDispatch } from 'react-redux'
 
 export default function SplashPage() {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleSignupClick = () => {
     navigate("/signup")
   }
+
+  // useEffect(() => {
+  //   dispatch(authenticate())
+  // }, [dispatch])
 
   return ( 
       <div className='splashpage-container'>

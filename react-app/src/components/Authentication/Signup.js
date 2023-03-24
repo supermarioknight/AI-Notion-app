@@ -1,28 +1,36 @@
-import React, {useState} from 'react'
-
+import React, {useState, useEffect} from 'react'
+import { authenticate } from '../../store/session'
 import { useNavigate } from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
+import { signUp } from '../../store/session'
 import { login } from '../../store/session'
 
 export default function Signup() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // const sessionUser = useSelector((state) => state.session.user);
+  const sessionUser = useSelector((state) => state.session.user);
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [username, setUserName] = useState("")
   const [errors, setErrors] = useState([])
 
-  // if (sessionUser) navigate('/home')
+  if (sessionUser) navigate('/home')
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await dispatch(login(email, password));
+    const data = await dispatch(signUp(username, email, password));
     if (data) {
       setErrors(data);
     }
   };
 
+  const handleDemo = async (e) => {
+    e.preventDefault()
+    const email = "demo@aa.io"
+    const password = "password"
+    await dispatch(login(email, password))
+  }
 
   return (
     <div className="login-container">
@@ -40,9 +48,9 @@ export default function Signup() {
             </label>
             <input
             className="login-input" 
-            type="email" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text" 
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
             placeHolder="e.g. Ada Lovelace, Ada, AL"
             required
             />
@@ -77,7 +85,7 @@ export default function Signup() {
           </div>
 
           <button className="login-submit">Submit</button>
-          <button onClick={() => navigate("/home")} className="login-submit">Demo User</button>
+          <button onClick={handleDemo} className="login-submit">Demo User</button>
 
         </form>
 

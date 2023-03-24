@@ -11,8 +11,8 @@ workspace_routes = Blueprint('workspaces', __name__)
 def workspace_all_by_user_id():
     """Route for getting all workspaces by user Id"""
     workspace = Workspace.query.filter(Workspace.user_id == current_user.id).all()
-    
-    return [w.to_dict() for w in workspace]
+    print(current_user.id)
+    return jsonify([w.to_dict() for w in workspace])
 
 ##? Confirmed Working
 @workspace_routes.route('/<int:id>')
@@ -22,15 +22,6 @@ def workspace_by_id(id):
     workspace = Workspace.query.filter_by(workspace_id=id, user_id=current_user.id).first()
     return workspace.to_dict()
 
-
-
-@workspace_routes.route('/<int:id>/pages')
-@login_required
-def pages_by_workspace_id(id):
-    """Route for getting all pages associated with a workspace"""
-    pages = Page.query.filter(Page.workspace_id == id).all()
-
-    return [p.to_dict() for p in pages] 
 
 
 @workspace_routes.route('/', methods=['POST'])

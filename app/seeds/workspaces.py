@@ -8,7 +8,7 @@ def seed_workspaces():
     workspaces = [
         {'workspace_id': 1, 'user_id': 1, 'name': 'Personal'},
         {'workspace_id': 2, 'user_id': 1, 'name': 'Business'},
-        {'workspace_id': 3, 'user_id': 1, 'name': 'Pleasure'},
+        {'workspace_id': 3, 'user_id': 1, 'name': 'Templates'},
         {'workspace_id': 4, 'user_id': 2, 'name': 'Freedom'},
         {'workspace_id': 5, 'user_id': 2, 'name': 'Work'},
         {'workspace_id': 6, 'user_id': 2, 'name': 'Philosophy'},

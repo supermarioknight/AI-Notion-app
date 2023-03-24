@@ -3,17 +3,18 @@ import "./Login.css"
 import { useNavigate } from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import { login } from '../../store/session'
+import { authenticate } from '../../store/session'
 
 export default function Login() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // const sessionUser = useSelector((state) => state.session.user);
+  const sessionUser = useSelector((state) => state.session.user);
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [errors, setErrors] = useState([])
 
-  // if (sessionUser) navigate('/home')
+  if (sessionUser) navigate('/home')
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +23,17 @@ export default function Login() {
       setErrors(data);
     }
   };
+
+  const handleDemo = async (e) => {
+    e.preventDefault()
+    const email = "demo@aa.io"
+    const password = "password"
+    await dispatch(login(email, password))
+  }
+
+  useEffect(() => {
+    dispatch(authenticate())
+  }, [dispatch])
 
 
   return (
@@ -65,7 +77,7 @@ export default function Login() {
 
           
             <button className="login-submit">Submit</button>
-            
+            <button onClick={handleDemo} className="login-submit">Demo User</button>
           
         </form>
 
