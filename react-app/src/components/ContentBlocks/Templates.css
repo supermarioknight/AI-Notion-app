@@ -23,3 +23,131 @@
     flex-direction: column;
     gap: 5px;
 }
+
+
+.table-header-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  
+.table-header {
+    background-color: honeydew;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.table-header:hover {
+    background-color: #ECECEC;
+}
+  
+.table-body {
+    display: flex;
+    flex-direction: column;
+}
+  
+.table-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+}
+  
+.table-cell {
+    text-align: center;
+    padding: 5px;
+    flex: 1;
+    cursor: pointer;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 17px;
+}
+
+.table-cell:hover {
+    background-color: #ECECEC;
+}
+  
+.table {
+    display: inline-block;
+    vertical-align: top;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 10px 0 0;
+}
+
+
+
+.todo-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+    
+}
+
+.todo-cell {
+    text-align: center;
+    padding: 5px;
+    flex: 1;
+    cursor: pointer;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 17px;
+}
+
+.todo-cell:last-child {
+    border-right: none;
+}
+
+
+.todo-cell:hover {
+    background-color: #ECECEC;
+}
+
+.todo-table {
+    display: inline-block;
+    vertical-align: top;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 10px 0 0;
+}
+
+.todo-header {
+    background-color: antiquewhite;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.todo-header:hover {
+    background-color: #ECECEC;
+}
+
+.todo-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.todo-header-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+

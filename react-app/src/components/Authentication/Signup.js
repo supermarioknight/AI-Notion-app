@@ -32,6 +32,10 @@ export default function Signup() {
     await dispatch(login(email, password))
   }
 
+  useEffect(() => {
+    dispatch(authenticate())
+  }, [dispatch])
+
   return (
     <div className="login-container">
       <div className="h1login">Sign Up</div>

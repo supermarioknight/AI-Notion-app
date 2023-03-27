@@ -22,8 +22,7 @@ export default function Navigation() {
         <div className="leftnav-container">
           <NavLink to="/" className="splash-navlink" >
             <div class="logo">
-              <div class="letter">A</div>
-              <div class="letter">I</div>
+                Idea Fusion
             </div>
           </NavLink>
           <Product workInProgress={workInProgress}/>

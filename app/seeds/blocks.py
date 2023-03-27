@@ -5,7 +5,7 @@ from sqlalchemy.sql import text
 def seed_blocks():
     blocks = [
     {
-        'block_id': 1, 
+        'id': 1, 
         'page_id': 1, 
         'template_id': 1, 
         'content': {
@@ -22,7 +22,7 @@ def seed_blocks():
         },
     },
     {
-        'block_id': 2,
+        'id': 2,
         'page_id': 2,
         'template_id': 2,
         'content': {
@@ -58,52 +58,72 @@ def seed_blocks():
         }
     },
     {
-        'block_id': 3,
-        'page_id': 3,
-        'template_id': 3,
+        'id': 3,
+        'page_id': 1,
+        'template_id': 1,
         'content': {
-            "header": ["Reading List"],
+            "header": ["Example Reading List"],
             "database": {
-                "Name": [
-                    "This Project is Hard",
-                    "Shout out to Jason GreenBerg",
-                    "Shout out to Will Htay",
-                    "Shout out to Marcus Kim",                    
+                "columns": [
+                    "Book Title",
+                    "Type",
+                    "Read?"
                 ],
-                "Type": [
-                    "Self Help",
-                    "Philosophy",
-                    "Sports Management",
-                    "Business Organization",
-                ],
-            }
-        }
-    },
-    {
-        'block_id': 4,
-        'page_id': 4,
-        'template_id': 4,
-        'content': {
-            "header": ["To-Do Board"],
-            "to-do": {
-                "To Do": [
-                    "Pass this project",
-                    "Learn how to use Mongo DB",
-                ],
-                "Doing": [
-                    "Getting a job at Google",
-                    "Finding a software engineering job",
-                    "Game plan for stalking tech recruiters",
-                    "Presenting this Project"
-                ],
-                "Done": [
-                    "Not this project"
+                "rows": [
+                    {
+                        "Book Title": "Slug Master 101 'The Visionary'",
+                        "Type": "Self Help",
+                        "Read?": "Yes"
+                    },
+                    {
+                        "Book Title": "Jason Greenberg da Mad Genius",
+                        "Type": "Philosophy",
+                        "Read?": "No"
+                    },
+                    {
+                        "Book Title": "Will Htay 'The Leader'",
+                        "Type": "Sports Management",
+                        "Read?": "No"
+                    },
+                    {
+                        "Book Title": "Marcus Kim 'The Mastermind'",
+                        "Type": "Business Organization",
+                        "Read?": "Yes"
+                    }
                 ]
             }
         }
     },
     {
-        'block_id': 5,
+        'id': 4,
+        'page_id': 4,
+        'template_id': 4,
+            'content': {
+                "header": ["To-Do Board"],
+                "to_do": {
+                "columns": ["To Do", "Doing", "Done"],
+                "rows": [
+                    {
+                    "To Do": "Pass this project",
+                    "Doing": "Getting a job at Google",
+                    "Done": "Not this project"
+                    },
+                    {
+                    "To Do": "Learn how to use Mongo DB",
+                    "Doing": "Finding a software engineering job"
+                    },
+                    {
+                    "Doing": "Game plan for stalking tech recruiters"
+                    },
+                    {
+                    "Doing": "Presenting this Project"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        'id': 5,
         'page_id': 5,
         'template_id': 5,
         'content': {
@@ -115,35 +135,44 @@ def seed_blocks():
         }
     },
     {
-        'block_id': 6,
+        'id': 6,
         'page_id': 6,
         'template_id': 6,
         'content': {
             "header": ["Excel Like Tables Template"],
             "table": {
-                "Companies": [
-                    "Google",
-                    "Notion",
-                    "Apple",
-                    "Netflix"
+                "columns": [
+                    "Companies",
+                    "Applied?",
+                    "Expected Salary"
                 ],
-                "Applied?": [
-                    "Yes",
-                    "No",
-                    "Yes",
-                    "No"
-                ],
-                "Expected Salary": [
-                    "$125,000",
-                    "$140,000",
-                    "Apple can't afford to pay me",
-                    "$1,000,000"
-                ],
+                "rows": [
+                    {
+                        "Companies": "Google",
+                        "Applied?": "Yes",
+                        "Expected Salary": "$125,000"
+                    },
+                    {
+                        "Companies": "Notion",
+                        "Applied?": "No",
+                        "Expected Salary": "$140,000"
+                    },
+                    {
+                        "Companies": "Apple",
+                        "Applied?": "Yes",
+                        "Expected Salary": "Apple can't afford to pay me"
+                    },
+                    {
+                        "Companies": "Netflix",
+                        "Applied?": "No",
+                        "Expected Salary": "$1,000,000"
+                    }
+                ]
             }
         }
     },
     {
-        'block_id': 7,
+        'id': 7,
         'page_id': 7,
         'template_id': 7,
         'content': {
@@ -157,69 +186,81 @@ def seed_blocks():
         }
     },
     {
-        'block_id': 8,
+        'id': 8,
         'page_id': 1,
         'template_id': 1,
         'content': {
-            "text": ["You can write Code using code blocks like this"],
-            "code": ["print Hello"]
+            "header": ["You can write Code using code blocks like this"],
+            "code": ["print Hello", "console.log('Hello World')"],
         }
     },
     {
-        'block_id': 9,
-        'page_id': 9, 
+        'id': 9,
+        'page_id': 9,
         'template_id': 9,
-        'content': {
-            "header": ["Template Kan-Ban Board"],
-            "to-do": {
-                "To Do": [
-                    "",
-                    "",
-                    "",
-                ],
-                "Doing": [
-                    "",
-                    "",
-                    "",
-                ],
-                "Done": [
-                    "",
-                    "",
-                    ""
+            'content': {
+                "header": ["To-Do Board"],
+                "to_do": {
+                "columns": ["To Do", "Doing", "Done"],
+                "rows": [
+                    {
+                    "To Do": "Pass this project",
+                    "Doing": "Getting a job at Google",
+                    "Done": "Not this project"
+                    },
+                    {
+                    "To Do": "Learn how to use Mongo DB",
+                    "Doing": "Finding a software engineering job"
+                    },
+                    {
+                    "Doing": "Game plan for stalking tech recruiters"
+                    },
+                    {
+                    "Doing": "Presenting this Project"
+                    }
                 ]
             }
         }
     },
     {
-        'block_id': 10,
+        'id': 10,
         'page_id': 10,
         'template_id': 10,
         'content': {
             "header": ["Tables Template"],
             "table": {
-                "Column 1": [
-                    "1",
-                    "2",
-                    "3",
-                    "4"
+                "columns": [
+                    "Column 1",
+                    "Column 2",
+                    "Column 3"
                 ],
-                "Column 2": [
-                    "A",
-                    "B",
-                    "C",
-                    "D"
-                ],
-                "Column 3": [
-                    "10",
-                    "20",
-                    "30",
-                    "40"
-                ],
+                "rows": [
+                    {
+                        "Column 1": "1",
+                        "Column 2": "A",
+                        "Column 3": "10"
+                    },
+                    {
+                        "Column 1": "2",
+                        "Column 2": "B",
+                        "Column 3": "20"
+                    },
+                    {
+                        "Column 1": "3",
+                        "Column 2": "C",
+                        "Column 3": "30"
+                    },
+                    {
+                        "Column 1": "4",
+                        "Column 2": "D",
+                        "Column 3": "40"
+                    }
+                ]
             }
         }
     },
     {
-        'block_id': 11,
+        'id': 11,
         'page_id': 11,
         'template_id': 11,
         'content': {
@@ -231,7 +272,7 @@ def seed_blocks():
         }
     },
     {
-        'block_id': 12,
+        'id': 12,
         'page_id': 12,
         'template_id': 12,
         'content': {
@@ -266,11 +307,254 @@ def seed_blocks():
             ]
         }
     },
+    {
+        'id': 13,
+        'page_id': 1,
+        'template_id': 1,
+            'content': {
+                "header": ["To-Do Board"],
+                "to_do": {
+                "columns": ["To Do", "Doing", "Done"],
+                "rows": [
+                    {
+                    "To Do": "Pass this project",
+                    "Doing": "Getting a job at Google",
+                    "Done": "Not this project"
+                    },
+                    {
+                    "To Do": "Learn how to use Mongo DB",
+                    "Doing": "Finding a software engineering job"
+                    },
+                    {
+                    "Doing": "Game plan for stalking tech recruiters"
+                    },
+                    {
+                    "Doing": "Presenting this Project"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        'id': 14,
+        'page_id': 3,
+        'template_id': 3,
+        'content': {
+            "header": ["Example Reading List"],
+            "database": {
+                "columns": [
+                    "Book Title",
+                    "Type",
+                    "Read?"
+                ],
+                "rows": [
+                    {
+                        "Book Title": "Slug Master 101 'The Visionary'",
+                        "Type": "Self Help",
+                        "Read?": "Yes"
+                    },
+                    {
+                        "Book Title": "Jason Greenberg da Mad Genius",
+                        "Type": "Philosophy",
+                        "Read?": "No"
+                    },
+                    {
+                        "Book Title": "Will Htay 'The Leader'",
+                        "Type": "Sports Management",
+                        "Read?": "No"
+                    },
+                    {
+                        "Book Title": "Marcus Kim 'The Mastermind'",
+                        "Type": "Business Organization",
+                        "Read?": "Yes"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        'id': 15,
+        'page_id': 1,
+        'template_id': 1,
+        'content': {
+            'header': ["Example Ordered Lists"],
+            'ordered_list': [
+                {
+                    'header': ["Subjects I'm Studying"],
+                    'list': [
+                        "Biology",
+                        "Calculus",
+                        "Computer Science",
+                        "Python"
+                    ]
+                },
+                {
+                    'header': ["Groceries"],
+                    'list': [
+                        "Ramen",
+                        "Potatoes",
+                        "Oranges",
+                        "Onions"
+                    ]
+                },
+                {
+                    'header': ["Bills"],
+                    'list': [
+                        "Utilities",
+                        "Internet",
+                        "Rent",
+                        "Girlfriend Expenses"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        'id': 16,
+        'page_id': 13,
+        'template_id': 13,
+        'content': {
+            "header": ["Project Management Template"],
+            "table": {
+                "columns": [
+                    "Project Name",
+                    "Status",
+                    "Start Date",
+                    "End Date",
+                    "Priority"
+                ],
+                "rows": [
+                    {
+                        "Project Name": "Website Redesign",
+                        "Status": "In Progress",
+                        "Start Date": "2023-01-10",
+                        "End Date": "2023-04-30",
+                        "Priority": "High"
+                    },
+                    {
+                        "Project Name": "Mobile App Development",
+                        "Status": "Not Started",
+                        "Start Date": "2023-05-01",
+                        "End Date": "2023-08-31",
+                        "Priority": "Medium"
+                    },
+                    {
+                        "Project Name": "SEO Optimization",
+                        "Status": "Completed",
+                        "Start Date": "2022-09-01",
+                        "End Date": "2022-12-31",
+                        "Priority": "Low"
+                    },
+                    {
+                        "Project Name": "Social Media Campaign",
+                        "Status": "In Progress",
+                        "Start Date": "2023-02-01",
+                        "End Date": "2023-04-15",
+                        "Priority": "Medium"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        'id': 17,
+        'page_id': 1,
+        'template_id': 1,
+        'content': {
+            "header": ["Project Management Template"],
+            "table": {
+                "columns": [
+                    "Project Name",
+                    "Status",
+                    "Start Date",
+                    "End Date",
+                    "Priority"
+                ],
+                "rows": [
+                    {
+                        "Project Name": "Website Redesign",
+                        "Status": "In Progress",
+                        "Start Date": "2023-01-10",
+                        "End Date": "2023-04-30",
+                        "Priority": "High"
+                    },
+                    {
+                        "Project Name": "Mobile App Development",
+                        "Status": "Not Started",
+                        "Start Date": "2023-05-01",
+                        "End Date": "2023-08-31",
+                        "Priority": "Medium"
+                    },
+                    {
+                        "Project Name": "SEO Optimization",
+                        "Status": "Completed",
+                        "Start Date": "2022-09-01",
+                        "End Date": "2022-12-31",
+                        "Priority": "Low"
+                    },
+                    {
+                        "Project Name": "Social Media Campaign",
+                        "Status": "In Progress",
+                        "Start Date": "2023-02-01",
+                        "End Date": "2023-04-15",
+                        "Priority": "Medium"
+                    }
+                ]
+            }
+        }
+    },
+        {
+        'id': 18,
+        'page_id': 2,
+        'template_id': 2,
+        'content': {
+            "header": ["Project Management Template"],
+            "table": {
+                "columns": [
+                    "Project Name",
+                    "Status",
+                    "Start Date",
+                    "End Date",
+                    "Priority"
+                ],
+                "rows": [
+                    {
+                        "Project Name": "Website Redesign",
+                        "Status": "In Progress",
+                        "Start Date": "2023-01-10",
+                        "End Date": "2023-04-30",
+                        "Priority": "High"
+                    },
+                    {
+                        "Project Name": "Mobile App Development",
+                        "Status": "Not Started",
+                        "Start Date": "2023-05-01",
+                        "End Date": "2023-08-31",
+                        "Priority": "Medium"
+                    },
+                    {
+                        "Project Name": "SEO Optimization",
+                        "Status": "Completed",
+                        "Start Date": "2022-09-01",
+                        "End Date": "2022-12-31",
+                        "Priority": "Low"
+                    },
+                    {
+                        "Project Name": "Social Media Campaign",
+                        "Status": "In Progress",
+                        "Start Date": "2023-02-01",
+                        "End Date": "2023-04-15",
+                        "Priority": "Medium"
+                    }
+                ]
+            }
+        }
+    }
 ]
 
     for block in blocks:
         db.session.add(Block(
-            block_id = block['block_id'],
+            id = block['id'],
             page_id = block['page_id'],
             template_id = block['template_id'],
             content = block['content'],
