@@ -68,9 +68,11 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE pages SET SCHEMA {SCHEMA};")
+        op.alter_column('workspaces', 'id', type_=sa.Integer(), nullable=False, server_default=None)
+        op.execute("ALTER TABLE workspaces ALTER COLUMN id SET DEFAULT nextval('workspaces_id_seq'::regclass)")
 
-    op.alter_column('workspaces', 'id', type_=sa.Integer(), nullable=False, server_default=None)
-    op.execute("ALTER TABLE workspaces ALTER COLUMN id SET DEFAULT nextval('workspaces_id_seq'::regclass)")
+    
+   
 
     op.create_table('blocks',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
