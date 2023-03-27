@@ -37,7 +37,7 @@ def create_workspace_by_user_id():
     new_workspace = Workspace(name=res['name'], user_id=current_user.id)
     db.session.add(new_workspace)
     db.session.commit()
-
+    print(new_workspace, "new_workspace printed")
 
     return jsonify(new_workspace.to_dict())
 

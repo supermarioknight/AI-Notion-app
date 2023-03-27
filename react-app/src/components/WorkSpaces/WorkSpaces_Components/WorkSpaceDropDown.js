@@ -136,7 +136,10 @@ export default function WorkSpaceDropDown() {
                             className="workspace-input"
                             type="text"
                             value={newWorkspaceName}
-                            onChange={(e) => setNewWorkspaceName(e.target.value)}
+                            onChange={async (e) => {
+                                await setNewWorkspaceName(e.target.value)
+                                
+                            }}
                             placeholder="Enter workspace name"
                             />
 
