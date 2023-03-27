@@ -31,6 +31,7 @@ export default function WorkSpaceDropDown() {
     const [toggleWorkSpace, setToggleWorkSpace] = useState(false)
     const [showCreateWorkspaceForm, setShowCreateWorkspaceForm] = useState(false);
     const [newWorkspaceName, setNewWorkspaceName] = useState('');
+    const [activeWorkSpace, setActiveWorkSpace] = useState(null)
 
     const handleLogout = async () => {
         dispatch(logout()).then(() => {
@@ -67,7 +68,7 @@ export default function WorkSpaceDropDown() {
         setEditingWorkspaceId(workspace.id);
         setEditingWorkspaceName(workspace.name);
     };
-    console.log(selectWork)
+    
     
     return (
         <div className="workspace-user" 
@@ -80,7 +81,7 @@ export default function WorkSpaceDropDown() {
                 {workspaces.map((ele, index) => (
                     
                     <div
-                    key={index+10}
+                    key={ele.id}
                     onClick={async () => {
                         await setSelectWork(ele);
                         await workplacePage(ele.id);
@@ -94,7 +95,7 @@ export default function WorkSpaceDropDown() {
                             type="text"
                             value={editingWorkspaceName}
                             onChange={(e) => handleWorkSpaceChange(e)}
-                            onBlur={() => setEditingWorkspaceId(null)}
+                            onBlur={() => setEditingWorkspaceId(ele.id)}
                         />
                     </form>
 
@@ -104,12 +105,12 @@ export default function WorkSpaceDropDown() {
                         <span style={{ paddingRight: 10 }}>
                         <FontAwesomeIcon
                             icon={faEdit}
-                            key={ele.workspace_id}
+                            key={ele.id}
                             style={{ paddingRight: 5 }}
                             onClick={(event) => handleEditWorkspaceClick(event, ele)}
                         />
                         <FontAwesomeIcon icon={faTrashCan} 
-                        key={ele.workspace_id}
+                        key={ele.id}
                         onClick={(event) => {
                             event.stopPropagation();
                             handleDeleteWorkSpace(event, ele.id);
