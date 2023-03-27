@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-
+from sqlalchemy.sql import text
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -45,7 +45,7 @@ class Workspace(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True, server_default=text("nextval('workspaces_id_seq'::regclass)"))
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     name = db.Column(db.String(100), nullable=False)
 
@@ -66,7 +66,7 @@ class Page(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True, server_default=text("nextval('pages_id_seq'::regclass)"))
     workspace_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("workspaces.id")), nullable=False)
     template_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("templates.id")), nullable=True) 
     name = db.Column(db.String(255), nullable=False)
