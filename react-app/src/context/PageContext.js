@@ -90,7 +90,7 @@ export default function PageProvider({ children }) {
 
 
         dispatch({ type: "CREATE_PAGE", payload: response });
-              
+        
     };
 
     const updatePageContent = async (id, content) => {
@@ -105,6 +105,7 @@ export default function PageProvider({ children }) {
         })
       })
       dispatch({type: "UPDATE_PAGE_CONTENT", payload: content})
+      await getPageContent(response.id);
     } 
 
   
