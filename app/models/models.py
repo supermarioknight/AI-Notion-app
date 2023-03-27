@@ -9,7 +9,7 @@ class User(db.Model, UserMixin):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
@@ -45,7 +45,7 @@ class Workspace(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    workspace_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     name = db.Column(db.String(100), nullable=False)
 
@@ -54,7 +54,7 @@ class Workspace(db.Model):
 
     def to_dict(self):
         return {
-            'workspace_id': self.workspace_id,
+            'id': self.id,
             'user_id': self.user_id,
             'name': self.name,
         }
@@ -66,9 +66,9 @@ class Page(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    page_id = db.Column(db.Integer, primary_key=True, nullable=False)
-    workspace_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("workspaces.workspace_id")), nullable=False)
-    template_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("templates.template_id")), nullable=False) 
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    workspace_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("workspaces.id")), nullable=False)
+    template_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("templates.id")), nullable=True) 
     name = db.Column(db.String(255), nullable=False)
 
     workspaces = db.relationship('Workspace', back_populates="pages")
@@ -77,12 +77,13 @@ class Page(db.Model):
 
     def to_dict(self):
         return {
-            'page_id': self.page_id,
+            'id': self.id,
             'workspace_id': self.workspace_id,
-            'template': self.template.to_dict(),
+            'template_id': self.template_id,
             'name': self.name,
             'blocks': [block.to_dict() for block in self.blocks]
         }
+
 
 ## Template Models
 class Template(db.Model):
@@ -91,7 +92,7 @@ class Template(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
     
-    template_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     name = db.Column(db.String(100), nullable=False)
 
     blocks = db.relationship("Block", back_populates="template")
@@ -99,7 +100,7 @@ class Template(db.Model):
 
     def to_dict(self):
         return {
-            'template_id': self.template_id,
+            'id': self.id,
             'name': self.name,
             # 'blocks': [block.to_dict() for block in self.blocks]
         }
@@ -112,10 +113,11 @@ class Block(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
     
-    block_id = db.Column(db.Integer, primary_key=True, nullable=False)
-    page_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("pages.page_id")), nullable=False)
-    template_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("templates.template_id")), nullable=True) 
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    page_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("pages.id")), nullable=False)
+    template_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("templates.id")), nullable=True) 
     content = db.Column(db.JSON, nullable=True)
+    parent_block_id = db.Column(db.Integer, nullable=True)
     
 
     pages = db.relationship("Page", back_populates = "blocks")
@@ -123,22 +125,8 @@ class Block(db.Model):
 
     def to_dict(self):
         return {
-            'block_id': self.block_id,
+            'id': self.id,
             'page_id': self.page_id,
             'template_id': self.template_id,
             'content': self.content,
         }
-
-
-
-# BlockTypes Tree
-# -----------------
-# "text"
-# "header"
-# "list"
-# "numbered_list"
-# "to-do"
-# "code"
-# "image"
-# "table"
-# "database"
