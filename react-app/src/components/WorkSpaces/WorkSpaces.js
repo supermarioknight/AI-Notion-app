@@ -46,7 +46,7 @@ export default function WorkSpaces() {
           setIsLoading(false);
         };
         fetchData();
-    }, [selectedWorkspace?.id, selectWork.id, dispatch]);
+    }, [selectedWorkspace?.id, selectWork?.id, dispatch]);
     
     // const clickCreatePage = async () => {
     //     const newPage = await createPage(Number(selectedPage));
@@ -125,7 +125,6 @@ export default function WorkSpaces() {
                                 onClick={() => setEditingPageId(ele.id)}
                             />
                             <FontAwesomeIcon onClick={async () => {
-
                                 await setSelectedPage(ele.id)
                                 await deletePage(Number(ele.id))
                                 await workplacePage(selectWork.id)
