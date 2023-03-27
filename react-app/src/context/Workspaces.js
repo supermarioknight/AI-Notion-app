@@ -47,13 +47,13 @@ export default function WorkspacesProvider({ children }) {
   const [state, dispatch] = useReducer(workspacesReducer, initialState);
   const [selectWork, setSelectWork] = useState("");
 
-  // useEffect(() => {
-  //   if (state.workspaces.length > 0 && !state.selectedWorkspace) {
-  //     // set the default value to the ID of the first workspace
-  //     const defaultWorkspaceId = state.workspaces[0].id;
-  //     dispatch({ type: "SET_SELECTED_WORKSPACE", payload: defaultWorkspaceId });
-  //   }
-  // }, [state.workspaces, state.selectedWorkspace]);
+  useEffect(() => {
+    if (state.workspaces.length > 0 && !state.selectedWorkspace) {
+      // set the default value to the ID of the first workspace
+      const defaultWorkspaceId = state.workspaces[0].id;
+      dispatch({ type: "SET_SELECTED_WORKSPACE", payload: defaultWorkspaceId });
+    }
+  }, [state.workspaces, state.selectedWorkspace]);
 
 
   const selectWorkspace = (workspace) => {

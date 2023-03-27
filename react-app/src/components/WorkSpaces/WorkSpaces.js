@@ -46,8 +46,24 @@ export default function WorkSpaces() {
           setIsLoading(false);
         };
         fetchData();
-    }, [selectedWorkspace?.id, selectWork?.id, dispatch]);
-        
+    }, [selectedWorkspace?.id, dispatch]);
+    
+    // const clickCreatePage = async () => {
+    //     const newPage = await createPage(Number(selectedPage));
+    //     await setSelectedPage(newPage.id);
+    //     await workplacePage(selectedWorkspace.id)
+    // }
+
+
+    // const clickDeletePage = async () => {
+    //     try {
+    //       await deletePage(Number(selectedPage));
+    //       await workplacePage(selectedWorkspace.id);
+    //     } catch (error) {
+    //       console.error(error); // or display an error message to the user
+    //     }
+    // }
+    
     const handleSubmit = async (id, e) => {
         e.preventDefault();
         try {
@@ -68,7 +84,7 @@ export default function WorkSpaces() {
         </h1>
         )
     }
-    
+    console.log(selectWork)
     
     return (
     <>
@@ -85,23 +101,17 @@ export default function WorkSpaces() {
                    {pages?.pages?.map((ele, index) => (
                     <div
                         className="page-element"
-                        key={ele.id}
                         onClick={() => setSelectedPage(ele.id)}
                     >
-                        {editingPageId === ele.id 
-                        ? 
-                        (
+                        {editingPageId === ele.id ? (
                              <form onSubmit={(e) => handleSubmit(ele.id, e)}>
                              <input
                                  value={newPageName}
-                                 key={ele.id}
                                  onChange={e => setNewPageName(e.target.value)}
                                  placeholder={ele.name}
                              />
                          </form>
-                        ) 
-                        : 
-                        (
+                        ) : (
                             <span>
                                 <FontAwesomeIcon style={{ paddingRight: 5 }} icon={faFile} /> {ele.name}
                             </span>
@@ -123,8 +133,8 @@ export default function WorkSpaces() {
         
                 <div onClick={async () => {
 
-                    await createPage(Number(selectWork.id || 1))
-                    await workplacePage(selectWork.id || 1)
+                    await createPage(Number(selectWork.id))
+                    await workplacePage(selectWork.id)
                 }} className='add-page'><FontAwesomeIcon icon={faPlus} /> Add a Page</div>
             </div>
 
