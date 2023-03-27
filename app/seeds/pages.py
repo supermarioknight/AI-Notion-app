@@ -34,6 +34,6 @@ def undo_pages():
     if environment == "production": 
         db.session.execute(f"TRUNCATE table {SCHEMA}.pages RESTART IDENTITY CASCADE;")
     else: 
-        db.session.execute(text("DELETE FROM Pages"))
+        db.session.execute(text("DELETE FROM pages"))
     
     db.session.commit()
