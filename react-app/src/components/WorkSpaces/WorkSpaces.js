@@ -127,7 +127,7 @@ export default function WorkSpaces() {
                             <FontAwesomeIcon onClick={async () => {
                                 await setSelectedPage(ele.id)
                                 await deletePage(Number(ele.id))
-                                await workplacePage(selectWork.id || 1)
+                                await workplacePage(ele.workspace_id || 1)
                             }} icon={faTrashCan} />
                         </span>
                     </div>
