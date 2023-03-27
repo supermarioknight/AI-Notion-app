@@ -54,7 +54,7 @@ def upgrade():
 
 
     if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE workspaces SET SCHEMA {SCHEMA};")
 
     op.create_table('pages',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),

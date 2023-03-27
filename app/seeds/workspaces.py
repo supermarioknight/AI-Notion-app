@@ -30,7 +30,7 @@ def undo_workspaces():
     if environment == "production": 
         db.session.execute(f"TRUNCATE table {SCHEMA}.workspaces RESTART IDENTITY CASCADE;")
     else: 
-        db.session.execute(text("DELETE FROM Workspaces"))
+        db.session.execute(text("DELETE FROM workspaces"))
     
     db.session.commit()
     
