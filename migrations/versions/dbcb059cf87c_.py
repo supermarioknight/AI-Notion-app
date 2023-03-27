@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 9b87a123adbf
+Revision ID: dbcb059cf87c
 Revises: 
-Create Date: 2023-03-27 10:24:35.149394
+Create Date: 2023-03-27 13:44:01.070425
 
 """
 from alembic import op
@@ -12,8 +12,9 @@ import os
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
+
 # revision identifiers, used by Alembic.
-revision = '9b87a123adbf'
+revision = 'dbcb059cf87c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,10 +27,9 @@ def upgrade():
     sa.Column('name', sa.String(length=100), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
+
     if environment == "production":
         op.execute(f"ALTER TABLE templates SET SCHEMA {SCHEMA};")
-    
-    
 
     op.create_table('users',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
@@ -40,7 +40,6 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
-
 
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
@@ -53,8 +52,9 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
 
+
     if environment == "production":
-        op.execute(f"ALTER TABLE workspaces SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
 
     op.create_table('pages',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
@@ -68,11 +68,6 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE pages SET SCHEMA {SCHEMA};")
-        op.alter_column('workspaces', 'id', type_=sa.Integer(), nullable=False, server_default=None)
-        op.execute("ALTER TABLE workspaces ALTER COLUMN id SET DEFAULT nextval('workspaces_id_seq'::regclass)")
-
-    
-   
 
     op.create_table('blocks',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
@@ -87,7 +82,6 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE blocks SET SCHEMA {SCHEMA};")
-
     # ### end Alembic commands ###
 
 
