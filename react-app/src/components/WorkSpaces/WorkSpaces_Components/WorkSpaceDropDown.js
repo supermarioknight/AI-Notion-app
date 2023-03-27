@@ -123,11 +123,11 @@ export default function WorkSpaceDropDown() {
                     <div onClick={() => setShowCreateWorkspaceForm(!showCreateWorkspaceForm)} className="create-work">Create Work Space</div>
                     {showCreateWorkspaceForm && (
                         <form
-                            onSubmit={(e) => {
+                            onSubmit={async (e) => {
                             e.preventDefault();
-                            createWorkspace(newWorkspaceName);
-                            setNewWorkspaceName('');
-                            setShowCreateWorkspaceForm(false);
+                            await createWorkspace(newWorkspaceName);
+                            await setNewWorkspaceName('');
+                            await setShowCreateWorkspaceForm(false);
                             }}>
 
                             <input

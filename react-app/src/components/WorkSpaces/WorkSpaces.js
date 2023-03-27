@@ -48,20 +48,21 @@ export default function WorkSpaces() {
         fetchData();
     }, [selectedWorkspace?.id, dispatch]);
     
-    const clickCreatePage = async () => {
-        await createPage(Number(selectedPage))
-        await workplacePage(selectedWorkspace.id)
-    }
+    // const clickCreatePage = async () => {
+    //     const newPage = await createPage(Number(selectedPage));
+    //     await setSelectedPage(newPage.id);
+    //     await workplacePage(selectedWorkspace.id)
+    // }
 
 
-    const clickDeletePage = async () => {
-        try {
-          await deletePage(Number(selectedPage));
-          await workplacePage(selectedWorkspace.id);
-        } catch (error) {
-          console.error(error); // or display an error message to the user
-        }
-    }
+    // const clickDeletePage = async () => {
+    //     try {
+    //       await deletePage(Number(selectedPage));
+    //       await workplacePage(selectedWorkspace.id);
+    //     } catch (error) {
+    //       console.error(error); // or display an error message to the user
+    //     }
+    // }
     
     const handleSubmit = async (id, e) => {
         e.preventDefault();
@@ -121,12 +122,19 @@ export default function WorkSpaces() {
                                 icon={faEdit}
                                 onClick={() => setEditingPageId(ele.id)}
                             />
-                            <FontAwesomeIcon onClick={clickDeletePage} icon={faTrashCan} />
+                            <FontAwesomeIcon onClick={async () => {
+                                await setSelectedPage(ele.id)
+                                await deletePage(Number(ele.id))
+                                await workplacePage(selectedWorkspace.id)
+                            }} icon={faTrashCan} />
                         </span>
                     </div>
                     ))}
             
-                    <div onClick={clickCreatePage} className='add-page'><FontAwesomeIcon icon={faPlus} /> Add a Page</div>
+                    <div onClick={async () => {
+                        await createPage(Number(selectedWorkspace.id))
+                        await workplacePage(selectedWorkspace.id)
+                    }} className='add-page'><FontAwesomeIcon icon={faPlus} /> Add a Page</div>
                 </div>
 
                 

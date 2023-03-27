@@ -9,7 +9,7 @@ class User(db.Model, UserMixin):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
@@ -45,7 +45,7 @@ class Workspace(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     name = db.Column(db.String(100), nullable=False)
 
@@ -66,7 +66,7 @@ class Page(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     workspace_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("workspaces.id")), nullable=False)
     template_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("templates.id")), nullable=True) 
     name = db.Column(db.String(255), nullable=False)
@@ -92,7 +92,7 @@ class Template(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
     
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     name = db.Column(db.String(100), nullable=False)
 
     blocks = db.relationship("Block", back_populates="template")
@@ -113,7 +113,7 @@ class Block(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
     
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     page_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("pages.id")), nullable=False)
     template_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("templates.id")), nullable=True) 
     content = db.Column(db.JSON, nullable=True)
