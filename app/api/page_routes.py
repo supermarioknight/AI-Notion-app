@@ -82,7 +82,7 @@ def create_a_page_by_workspace_id():
 
     db.session.commit()
 
-    return new_page.to_dict()
+    return jsonify(new_page.to_dict())
 
 
 @page_routes.route('/<int:id>', methods=["DELETE"])
