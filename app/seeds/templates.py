@@ -28,7 +28,7 @@ def seed_templates():
 
 def undo_templates():
     if environment == "production": 
-        db.session.execute(f"TRUNCATE table {SCHEMA}.Templates RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.templates RESTART IDENTITY CASCADE;")
     else: 
         db.session.execute(text("DELETE FROM Templates"))
     

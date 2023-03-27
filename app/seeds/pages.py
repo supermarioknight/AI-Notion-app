@@ -32,7 +32,7 @@ def seed_pages():
 
 def undo_pages():
     if environment == "production": 
-        db.session.execute(f"TRUNCATE table {SCHEMA}.Pages RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.pages RESTART IDENTITY CASCADE;")
     else: 
         db.session.execute(text("DELETE FROM Pages"))
     

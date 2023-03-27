@@ -42,6 +42,5 @@ def undo():
     undo_workspaces()
     undo_templates()
     undo_pages()
-
     undo_blocks()
     # Add other undo functions here

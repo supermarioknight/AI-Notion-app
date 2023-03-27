@@ -28,7 +28,7 @@ def seed_workspaces():
 
 def undo_workspaces():
     if environment == "production": 
-        db.session.execute(f"TRUNCATE table {SCHEMA}.Workspaces RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.workspaces RESTART IDENTITY CASCADE;")
     else: 
         db.session.execute(text("DELETE FROM Workspaces"))
     
