@@ -47,23 +47,7 @@ export default function WorkSpaces() {
         };
         fetchData();
     }, [selectedWorkspace?.id, selectWork?.id, dispatch]);
-    
-    // const clickCreatePage = async () => {
-    //     const newPage = await createPage(Number(selectedPage));
-    //     await setSelectedPage(newPage.id);
-    //     await workplacePage(selectedWorkspace.id)
-    // }
-
-
-    // const clickDeletePage = async () => {
-    //     try {
-    //       await deletePage(Number(selectedPage));
-    //       await workplacePage(selectedWorkspace.id);
-    //     } catch (error) {
-    //       console.error(error); // or display an error message to the user
-    //     }
-    // }
-    
+        
     const handleSubmit = async (id, e) => {
         e.preventDefault();
         try {
@@ -84,7 +68,7 @@ export default function WorkSpaces() {
         </h1>
         )
     }
-    console.log(selectWork)
+    
     
     return (
     <>
@@ -104,7 +88,9 @@ export default function WorkSpaces() {
                         key={ele.id}
                         onClick={() => setSelectedPage(ele.id)}
                     >
-                        {editingPageId === ele.id ? (
+                        {editingPageId === ele.id 
+                        ? 
+                        (
                              <form onSubmit={(e) => handleSubmit(ele.id, e)}>
                              <input
                                  value={newPageName}
@@ -113,7 +99,9 @@ export default function WorkSpaces() {
                                  placeholder={ele.name}
                              />
                          </form>
-                        ) : (
+                        ) 
+                        : 
+                        (
                             <span>
                                 <FontAwesomeIcon style={{ paddingRight: 5 }} icon={faFile} /> {ele.name}
                             </span>

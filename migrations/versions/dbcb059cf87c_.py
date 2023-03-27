@@ -7,6 +7,7 @@ Create Date: 2023-03-27 13:44:01.070425
 """
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy import Sequence
 
 import os
 environment = os.getenv("FLASK_ENV")
@@ -44,8 +45,11 @@ def upgrade():
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
 
+    workspace_id_seq = Sequence('workspaces_id_seq')
+    op.execute(workspace_id_seq.create())    
+
     op.create_table('workspaces',
-    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('id', sa.Integer(), default=workspace_id_seq.next_value(), primary_key=True, nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
@@ -93,3 +97,4 @@ def downgrade():
     op.drop_table('users')
     op.drop_table('templates')
     # ### end Alembic commands ###
+    op.execute("DROP SEQUENCE workspaces_id_seq")
