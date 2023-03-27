@@ -46,7 +46,7 @@ export default function WorkSpaces() {
           setIsLoading(false);
         };
         fetchData();
-    }, [selectedWorkspace?.id, dispatch]);
+    }, [selectedWorkspace?.id, selectWork.id, dispatch]);
     
     // const clickCreatePage = async () => {
     //     const newPage = await createPage(Number(selectedPage));
@@ -101,12 +101,14 @@ export default function WorkSpaces() {
                    {pages?.pages?.map((ele, index) => (
                     <div
                         className="page-element"
+                        key={ele.id}
                         onClick={() => setSelectedPage(ele.id)}
                     >
                         {editingPageId === ele.id ? (
                              <form onSubmit={(e) => handleSubmit(ele.id, e)}>
                              <input
                                  value={newPageName}
+                                 key={ele.id}
                                  onChange={e => setNewPageName(e.target.value)}
                                  placeholder={ele.name}
                              />
@@ -123,6 +125,7 @@ export default function WorkSpaces() {
                                 onClick={() => setEditingPageId(ele.id)}
                             />
                             <FontAwesomeIcon onClick={async () => {
+
                                 await setSelectedPage(ele.id)
                                 await deletePage(Number(ele.id))
                                 await workplacePage(selectWork.id)
@@ -130,13 +133,13 @@ export default function WorkSpaces() {
                         </span>
                     </div>
                     ))}
-            
-                    <div onClick={async () => {
+        
+                <div onClick={async () => {
 
-                        await createPage(Number(selectWork.id))
-                        await workplacePage(selectWork.id)
-                    }} className='add-page'><FontAwesomeIcon icon={faPlus} /> Add a Page</div>
-                </div>
+                    await createPage(Number(selectWork.id || 1))
+                    await workplacePage(selectWork.id || 1)
+                }} className='add-page'><FontAwesomeIcon icon={faPlus} /> Add a Page</div>
+            </div>
 
                 
                 <Dashboard4Bottom/>
