@@ -84,7 +84,9 @@ export default function WorkSpaces() {
         </h1>
         )
     }
-    console.log(selectWork)
+    
+
+    // console.log(pages)
     
     return (
     <>
@@ -125,7 +127,7 @@ export default function WorkSpaces() {
                             <FontAwesomeIcon onClick={async () => {
                                 await setSelectedPage(ele.id)
                                 await deletePage(Number(ele.id))
-                                await workplacePage(selectWork.id)
+                                await workplacePage(selectWork.id || 1)
                             }} icon={faTrashCan} />
                         </span>
                     </div>
@@ -133,8 +135,8 @@ export default function WorkSpaces() {
         
                 <div onClick={async () => {
 
-                    await createPage(Number(selectWork.id))
-                    await workplacePage(selectWork.id)
+                    await createPage(Number(selectWork.id || 1))
+                    await workplacePage(selectWork.id || 1)
                 }} className='add-page'><FontAwesomeIcon icon={faPlus} /> Add a Page</div>
             </div>
 
@@ -151,11 +153,8 @@ export default function WorkSpaces() {
             
         <div className="page-container">
             {selectedPage && <GettingStarted selectedPage={selectedPage} />}
-            
         </div>
-    </div>
-
-        
+    </div>        
 </>
     );
 }
