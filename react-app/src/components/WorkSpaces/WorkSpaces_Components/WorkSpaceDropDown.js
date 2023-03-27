@@ -67,7 +67,7 @@ export default function WorkSpaceDropDown() {
         setEditingWorkspaceId(workspace.id);
         setEditingWorkspaceName(workspace.name);
     };
-    
+    console.log(selectWork)
     
     return (
         <div className="workspace-user" 
@@ -82,7 +82,7 @@ export default function WorkSpaceDropDown() {
                     <div
                     key={index+10}
                     onClick={async () => {
-                        setSelectWork(ele);
+                        await setSelectWork(ele);
                         await workplacePage(ele.id);
                       }}
 
@@ -125,9 +125,10 @@ export default function WorkSpaceDropDown() {
                         <form
                             onSubmit={async (e) => {
                             e.preventDefault();
-                            await createWorkspace(newWorkspaceName);
-                            await setNewWorkspaceName('');
+                            const newWork = await createWorkspace(newWorkspaceName);
+                            await setNewWorkspaceName(newWorkspaceName);
                             await setShowCreateWorkspaceForm(false);
+                            await setSelectWork(newWork)
                             }}>
 
                             <input

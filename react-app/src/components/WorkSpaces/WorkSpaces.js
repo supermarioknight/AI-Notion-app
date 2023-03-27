@@ -68,7 +68,7 @@ export default function WorkSpaces() {
         e.preventDefault();
         try {
             await updatePage(id, newPageName); // Pass the new page name as an argument
-            await workplacePage(selectedWorkspace.id);
+            await workplacePage(selectWork.id);
         } catch (error) {
             console.error(error);
         } finally {
@@ -84,7 +84,7 @@ export default function WorkSpaces() {
         </h1>
         )
     }
-    
+    console.log(selectWork)
     
     return (
     <>
@@ -132,8 +132,9 @@ export default function WorkSpaces() {
                     ))}
             
                     <div onClick={async () => {
-                        await createPage(Number(selectedWorkspace.id))
-                        await workplacePage(selectedWorkspace.id)
+
+                        await createPage(Number(selectWork.id))
+                        await workplacePage(selectWork.id)
                     }} className='add-page'><FontAwesomeIcon icon={faPlus} /> Add a Page</div>
                 </div>
 
