@@ -73,7 +73,7 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE pages SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER SEQUENCE workspace_id_seq restart WITH 1000")
+        op.execute(f"ALTER SEQUENCE workspace_id_seq restart WITH 1000;")
 
     op.create_table('blocks',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -88,7 +88,7 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE blocks SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER SEQUENCE page_id_seq restart WITH 1000")
+        op.execute(f"ALTER SEQUENCE page_id_seq restart WITH 1000;")
     # ### end Alembic commands ###
 
 
