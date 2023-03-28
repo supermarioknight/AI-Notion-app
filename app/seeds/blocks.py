@@ -5,7 +5,6 @@ from sqlalchemy.sql import text
 def seed_blocks():
     blocks = [
     {
-        'id': 1, 
         'page_id': 1, 
         'template_id': 1, 
         'content': {
@@ -22,7 +21,6 @@ def seed_blocks():
         },
     },
     {
-        'id': 2,
         'page_id': 2,
         'template_id': 2,
         'content': {
@@ -58,7 +56,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 3,
         'page_id': 1,
         'template_id': 1,
         'content': {
@@ -95,7 +92,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 4,
         'page_id': 4,
         'template_id': 4,
             'content': {
@@ -123,7 +119,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 5,
         'page_id': 5,
         'template_id': 5,
         'content': {
@@ -135,7 +130,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 6,
         'page_id': 6,
         'template_id': 6,
         'content': {
@@ -172,7 +166,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 7,
         'page_id': 7,
         'template_id': 7,
         'content': {
@@ -186,7 +179,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 8,
         'page_id': 1,
         'template_id': 1,
         'content': {
@@ -195,7 +187,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 9,
         'page_id': 9,
         'template_id': 9,
             'content': {
@@ -223,7 +214,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 10,
         'page_id': 10,
         'template_id': 10,
         'content': {
@@ -260,7 +250,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 11,
         'page_id': 11,
         'template_id': 11,
         'content': {
@@ -272,7 +261,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 12,
         'page_id': 12,
         'template_id': 12,
         'content': {
@@ -308,7 +296,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 13,
         'page_id': 1,
         'template_id': 1,
             'content': {
@@ -336,7 +323,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 14,
         'page_id': 3,
         'template_id': 3,
         'content': {
@@ -373,7 +359,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 15,
         'page_id': 1,
         'template_id': 1,
         'content': {
@@ -410,7 +395,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 16,
         'page_id': 13,
         'template_id': 13,
         'content': {
@@ -457,7 +441,6 @@ def seed_blocks():
         }
     },
     {
-        'id': 17,
         'page_id': 1,
         'template_id': 1,
         'content': {
@@ -504,7 +487,6 @@ def seed_blocks():
         }
     },
         {
-        'id': 18,
         'page_id': 2,
         'template_id': 2,
         'content': {
@@ -554,7 +536,6 @@ def seed_blocks():
 
     for block in blocks:
         db.session.add(Block(
-            id = block['id'],
             page_id = block['page_id'],
             template_id = block['template_id'],
             content = block['content'],
