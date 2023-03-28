@@ -564,8 +564,8 @@ def seed_blocks():
 
 def undo_blocks():
     if environment == "production": 
-        db.session.execute(f"TRUNCATE table {SCHEMA}.Blocks RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.blocks RESTART IDENTITY CASCADE;")
     else: 
-        db.session.execute(text("DELETE FROM Blocks"))
+        db.session.execute(text("DELETE FROM blocks"))
     
     db.session.commit()

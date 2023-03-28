@@ -5,7 +5,7 @@ export const useWorkspacesAPI = () => useContext(WorkspacesContext)
 
 const initialState = {
   workspaces: [],
-  selectedWorkspace: null,
+  activeWorkSpace: null,
   workspacePages: [],
   pages: []
 }
