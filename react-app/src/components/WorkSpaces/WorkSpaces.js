@@ -48,22 +48,7 @@ export default function WorkSpaces() {
         fetchData();
     }, [selectedWorkspace?.id, dispatch]);
     
-    // const clickCreatePage = async () => {
-    //     const newPage = await createPage(Number(selectedPage));
-    //     await setSelectedPage(newPage.id);
-    //     await workplacePage(selectedWorkspace.id)
-    // }
 
-
-    // const clickDeletePage = async () => {
-    //     try {
-    //       await deletePage(Number(selectedPage));
-    //       await workplacePage(selectedWorkspace.id);
-    //     } catch (error) {
-    //       console.error(error); // or display an error message to the user
-    //     }
-    // }
-    
     const handleSubmit = async (id, e) => {
         e.preventDefault();
         try {
@@ -84,9 +69,7 @@ export default function WorkSpaces() {
         </h1>
         )
     }
-    
 
-    // console.log(pages)
     
     return (
     <>
