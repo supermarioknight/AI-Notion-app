@@ -3,24 +3,23 @@ from sqlalchemy.sql import text
 
 def seed_templates():
     templates = [
-        {'id': 1, 'name': 'Getting Started Template'},
-        {'id': 2, 'name': 'List Template'},
-        {'id': 3, 'name': 'Reading List Template'},
-        {'id': 4, 'name': 'To-Do Template'},
-        {'id': 5, 'name': 'Code Block Template'},
-        {'id': 6, 'name': 'Tables Template'},
-        {'id': 7, 'name': 'Blank Page Template'},
-        {'id': 8, 'name': 'Blank Database Template'},
-        {'id': 9, 'name': 'Blank To-Do Template'},
-        {'id': 10, 'name': 'Blank Tables Template'},
-        {'id': 11, 'name': 'Blank Code Block Template'},
-        {'id': 12, 'name': "Ordered List Template"},
-        {'id': 13, 'name': 'Project Management Template'}
+        {'name': 'Getting Started Template'},
+        {'name': 'List Template'},
+        {'name': 'Reading List Template'},
+        {'name': 'To-Do Template'},
+        {'name': 'Code Block Template'},
+        {'name': 'Tables Template'},
+        {'name': 'Blank Page Template'},
+        {'name': 'Blank Database Template'},
+        {'name': 'Blank To-Do Template'},
+        {'name': 'Blank Tables Template'},
+        {'name': 'Blank Code Block Template'},
+        {'name': "Ordered List Template"},
+        {'name': 'Project Management Template'}
     ]
 
     for template in templates:
         db.session.add(Template(
-            id = template['id'],
             name = template['name'],
         ))
 
