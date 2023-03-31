@@ -7,12 +7,25 @@ import Product from './Navigation/Product/ProductDropDown';
 import Download from './Navigation/Download/Download';
 import Solutions from './Navigation/Solutions/Solutions';
 import Resources from './Navigation/Resources/Resources';
+import { login } from '../../store/session';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Navigation() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const workInProgress = () => {
     alert('This feature is currently in development')
+  }
+
+  const handleDemo = async (e) => {
+    e.preventDefault()
+    const email = "demo@aa.io"
+    const password = "password"
+    await dispatch(login(email, password))
+    .then(navigate("/home"))
   }
 
   return (
@@ -35,7 +48,7 @@ export default function Navigation() {
         
 
         <div className="rightnav-container">
-          <NavLink className="splash-navlink" >Request a Demo</NavLink>
+          <NavLink onClick={handleDemo} className="splash-navlink" >Request a Demo</NavLink>
           <NavLink to="/login" className="splash-navlink" >Login</NavLink>
           <NavLink to="/signup" className="try">Sign Up</NavLink>
         </div>

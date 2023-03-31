@@ -94,19 +94,20 @@ export default function PageProvider({ children }) {
     };
 
     const updatePageContent = async (id, content) => {
-      const response = await fetchData(`/api/pages/${id}/pages/`, {
+      const response = await fetchData(`/api/pages/${id}/blocks`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: id,
-          content: content
-        })
-      })
-      dispatch({type: "UPDATE_PAGE_CONTENT", payload: content})
+          blocks: content,
+        }),
+      });
+      console.log("Response:", response);
+
+      dispatch({ type: "UPDATE_PAGE_CONTENT", payload: content });
       await getPageContent(response.id);
-    } 
+    };
 
   
     // Define your action creators and async API calls here

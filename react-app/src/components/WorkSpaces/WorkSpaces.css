@@ -47,7 +47,11 @@
     flex-direction: row;
 }
   
-
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
 
 .workspace-input {
     margin-right: 10px;

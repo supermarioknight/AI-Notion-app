@@ -38,22 +38,24 @@ export default function WorkSpaces() {
           await dispatch(authenticate());
           await fetchAllWorkSpaces();
           await getPageContent(selectedPage)
+          
           if (selectedWorkspace?.id) {
             await fetchWorkspaceById(selectedWorkspace?.id);
             await fetchAllPagesbyWorkPlaceId(selectedWorkspace?.id);
-            await workplacePage(selectedWorkspace.id);
+            await workplacePage(selectWork?.id || 1)
           }
           setIsLoading(false);
         };
         fetchData();
-    }, [selectedWorkspace?.id, dispatch]);
+    }, [selectedWorkspace?.id, selectWork?.id, dispatch]);
     
 
     const handleSubmit = async (id, e) => {
         e.preventDefault();
         try {
             await updatePage(id, newPageName); // Pass the new page name as an argument
-            await workplacePage(selectWork.id);
+            await fetchAllPagesbyWorkPlaceId(selectedWorkspace?.id);
+            await workplacePage(selectWork.id)
         } catch (error) {
             console.error(error);
         } finally {
@@ -84,23 +86,24 @@ export default function WorkSpaces() {
                     onMouseLeave={() => setVisiblePage(false)}
                     >
                    {pages?.pages?.map((ele, index) => (
-                    <div
-                        className="page-element"
-                        onClick={() => setSelectedPage(ele.id)}
-                    >
-                        {editingPageId === ele.id ? (
-                             <form onSubmit={(e) => handleSubmit(ele.id, e)}>
-                             <input
-                                 value={newPageName}
-                                 onChange={e => setNewPageName(e.target.value)}
-                                 placeholder={ele.name}
+                        <div className="page-element" onClick={() => setSelectedPage(ele.id)}>
+
+                        {editingPageId === ele.id 
+                        ? (
+                            <form onSubmit={(e) => handleSubmit(ele.id, e)}>
+                            <input
+                                value={newPageName}
+                                onChange={e => setNewPageName(e.target.value)}
+                                placeholder={ele.name}
                              />
                          </form>
-                        ) : (
-                            <span>
-                                <FontAwesomeIcon style={{ paddingRight: 5 }} icon={faFile} /> {ele.name}
-                            </span>
+                        ) 
+                        : (
+                        <span>
+                            <FontAwesomeIcon style={{ paddingRight: 5 }} icon={faFile} /> {ele.name}
+                        </span>
                         )}
+
                        <span className={visiblePage ? "" : "hidden"}>
                             <FontAwesomeIcon
                                 style={{ marginRight: '10px' }}
@@ -117,19 +120,20 @@ export default function WorkSpaces() {
                     ))}
         
                 <div onClick={async () => {
-
                     await createPage(Number(selectWork.id || 1))
                     await workplacePage(selectWork.id || 1)
                 }} className='add-page'><FontAwesomeIcon icon={faPlus} /> Add a Page</div>
             </div>
 
-                
                 <Dashboard4Bottom/>
-
-                
-                    
                 <div className="newpage-container">
-                    <button className="newpage-button"><FontAwesomeIcon style={{paddingRight: '8px'}} icon={faPlus} /> New page</button>
+                    <button className="newpage-button"
+                    onClick={async () => {
+                        await createPage(Number(selectWork.id || 1))
+                        await workplacePage(selectWork.id || 1)
+                    }}
+                    >
+                    <FontAwesomeIcon style={{paddingRight: '8px'}} icon={faPlus} /> New page</button>
                 </div>
             </div >
         </div>

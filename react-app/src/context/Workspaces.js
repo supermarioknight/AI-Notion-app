@@ -5,7 +5,7 @@ export const useWorkspacesAPI = () => useContext(WorkspacesContext)
 
 const initialState = {
   workspaces: [],
-  activeWorkSpace: null,
+  selectedWorkspace: null,
   workspacePages: [],
   pages: []
 }
@@ -49,7 +49,7 @@ export default function WorkspacesProvider({ children }) {
 
   useEffect(() => {
     if (state.workspaces.length > 0 && !state.selectedWorkspace) {
-      // set the default value to the ID of the first workspace
+
       const defaultWorkspaceId = state.workspaces[0].id;
       dispatch({ type: "SET_SELECTED_WORKSPACE", payload: defaultWorkspaceId });
     }

@@ -115,13 +115,22 @@ def update_page_blocks(id):
     if not page:
         return jsonify({"message": "Specified page does not exist"}), 404
 
-    # Assuming 'blocks' is a list of dictionaries with block_id and content keys
     updated_blocks = res.get('blocks', [])
+
+    if updated_blocks is None:
+        return jsonify({"message": "No blocks key found in request data"}), 400
 
     for updated_block in updated_blocks:
         block = Block.query.get(updated_block['block_id'])
         if block and block.page_id == id:
-            block.content = updated_block['content']
+            # Update the respective properties of the block
+            block.header = updated_block.get('header', block.header)
+            block.text = updated_block.get('text', block.text)
+            block.code = updated_block.get('code', block.code)
+            block.ordered_list = updated_block.get('ordered_list', block.ordered_list)
+            block.database = updated_block.get('database', block.database)
+            block.to_do = updated_block.get('to_do', block.to_do)
+            block.table = updated_block.get('table', block.table)
         else:
             return jsonify({"message": f"Block with id {updated_block['block_id']} not found in the specified page"}), 404
 
