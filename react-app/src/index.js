@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
-import WorkspacesProvider from './context/Workspaces';
+import WorkspacesProvider from './context/WorkspacesContext';
 import PageProvider from './context/PageContext';
 import configureStore from './store';
 import * as sessionActions from './store/session';

@@ -35,7 +35,7 @@ export default function Navigation() {
         <div className="leftnav-container">
           <NavLink to="/" className="splash-navlink" >
             <div class="logo">
-                Idea Fusion
+                AIdea
             </div>
           </NavLink>
           <Product workInProgress={workInProgress}/>

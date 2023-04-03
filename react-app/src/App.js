@@ -7,7 +7,7 @@ import WorkSpaces from './components/WorkSpaces/WorkSpaces';
 import { authenticate } from './store/session';
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { useWorkspacesAPI } from './context/Workspaces';
+import { useWorkspacesAPI } from './context/WorkspacesContext';
 
 
 function App() {

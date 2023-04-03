@@ -5,64 +5,64 @@ import { faSearch, faClock, faGear, faUsers, faFolderOpen, faTrashCan, faPlus, f
 import { useDispatch} from 'react-redux';
 import {logout, authenticate} from '../../store/session'
 import { useNavigate } from 'react-router-dom';
-import GettingStarted from '../ContentBlocks/Getting Started';
 
-import { useWorkspacesAPI } from '../../context/Workspaces';
+
+import { useWorkspacesAPI } from '../../context/WorkspacesContext';
 import { usePagesAPI } from '../../context/PageContext';
 
 import WorkSpaceDropDown from './WorkSpaces_Components/WorkSpaceDropDown';
 import Dashboard3Buttons from './WorkSpaces_Components/Dashboard3Buttons';
-import Page from './WorkSpaces_Components/Page';
+import PageEditor from '../ContentBlocks/PageEditor';
 import Dashboard4Bottom from './WorkSpaces_Components/Dashboard4Bottom';
 
 
 export default function WorkSpaces() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    
-    
 
-    const {workspaces, selectedWorkspace, createWorkspace, editWorkspace, deleteWorkSpace, fetchAllWorkSpaces, 
-        fetchWorkspaceById, fetchAllPagesbyWorkPlaceId, setSelectWork, selectWork, workspacePages, workplacePage, 
-        pages
+    const {
+        actionGetAllWorkspaces,
+        actionEditWorkSpace,
+        actionDeleteWorkspace,
+        actionCreateWorkspace,
+        actionSetWorkspaceId,
+        actionGetWorkPlaceById,
+        workSpaceId,
+        workspaces,
+        currentWorkspace
       } = useWorkspacesAPI();
 
-    const {getPageContent, deletePage, createPage, updatePage, allPages, setSelectedPage, selectedPage} = usePagesAPI()
+    const {
+        actionSetCurrentPage,
+        actionDeletePage,
+        actionCreatePage,
+        actionGetAllPagesWorkSpace,
+        actionGetCurrentPageContent,
+        actionUpdatePage,
+        pages,
+        currentPageId,
+        currentPageContent
+    } = usePagesAPI()
+
+
+
     const [isLoading, setIsLoading] = useState(true)
     const [visiblePage, setVisiblePage] = useState(false)
     const [editingPageId, setEditingPageId] = useState(null);
-    const [newPageName, setNewPageName] = useState('');
+    const [pageName, setPageName] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
           await dispatch(authenticate());
-          await fetchAllWorkSpaces();
-          await getPageContent(selectedPage)
-          
-          if (selectedWorkspace?.id) {
-            await fetchWorkspaceById(selectedWorkspace?.id);
-            await fetchAllPagesbyWorkPlaceId(selectedWorkspace?.id);
-            await workplacePage(selectWork?.id || 1)
-          }
+        //   await actionGetCurrentPageContent(currentPageId)
+          await actionGetAllWorkspaces()
+          await actionGetWorkPlaceById(workSpaceId)
+          await actionGetAllPagesWorkSpace(workSpaceId)
           setIsLoading(false);
         };
         fetchData();
-    }, [selectedWorkspace?.id, selectWork?.id, dispatch]);
+    }, [workSpaceId, currentPageId, dispatch]);
     
-
-    const handleSubmit = async (id, e) => {
-        e.preventDefault();
-        try {
-            await updatePage(id, newPageName); // Pass the new page name as an argument
-            await fetchAllPagesbyWorkPlaceId(selectedWorkspace?.id);
-            await workplacePage(selectWork.id)
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setEditingPageId(null);
-            setNewPageName('');
-        }
-    };
     
     if (isLoading) {
         return (
@@ -71,14 +71,21 @@ export default function WorkSpaces() {
         </h1>
         )
     }
+    
+    if (!pages) return null
+    
 
+    // console.log(currentPageId, 'pageId')
+    // console.log(workSpaceId, 'workspaceId')
+    // console.log(pages, 'pages')
+    // console.log(workspaces, 'workspaces')
     
     return (
     <>
     <div className="workspace-container"> 
         <div className="dashboard-container">
             <div className="dashboard-content">
-                <WorkSpaceDropDown pages={pages}/>
+                <WorkSpaceDropDown workspaces={workspaces}/>
                 <Dashboard3Buttons/>
 
                 <div className="pages-container"
@@ -86,17 +93,26 @@ export default function WorkSpaces() {
                     onMouseLeave={() => setVisiblePage(false)}
                     >
                    {pages?.pages?.map((ele, index) => (
-                        <div className="page-element" onClick={() => setSelectedPage(ele.id)}>
-
+                        <div className="page-element" onClick={() => {
+                            actionSetCurrentPage(ele.id)
+                            setPageName(ele.name)
+                        }}
+                        >
                         {editingPageId === ele.id 
                         ? (
-                            <form onSubmit={(e) => handleSubmit(ele.id, e)}>
+                            <form onSubmit={async (e) => {
+                                e.preventDefault();
+                                await actionUpdatePage(ele.id, pageName); 
+                                await actionGetAllPagesWorkSpace(workSpaceId);
+                                await setEditingPageId(null);
+                                await setPageName('');
+                            }}>
                             <input
-                                value={newPageName}
-                                onChange={e => setNewPageName(e.target.value)}
+                                value={pageName}
+                                onChange={e => setPageName(e.target.value)}
                                 placeholder={ele.name}
-                             />
-                         </form>
+                                />
+                            </form>
                         ) 
                         : (
                         <span>
@@ -111,17 +127,17 @@ export default function WorkSpaces() {
                                 onClick={() => setEditingPageId(ele.id)}
                             />
                             <FontAwesomeIcon onClick={async () => {
-                                await setSelectedPage(ele.id)
-                                await deletePage(Number(ele.id))
-                                await workplacePage(ele.workspace_id || 1)
+                                await actionSetCurrentPage(ele.id)
+                                await actionDeletePage(Number(ele.id))
+                                await actionGetAllPagesWorkSpace(ele.workspace_id)
                             }} icon={faTrashCan} />
                         </span>
                     </div>
                     ))}
         
                 <div onClick={async () => {
-                    await createPage(Number(selectWork.id || 1))
-                    await workplacePage(selectWork.id || 1)
+                    await actionCreatePage(workSpaceId)
+                    await actionGetAllPagesWorkSpace(workSpaceId)
                 }} className='add-page'><FontAwesomeIcon icon={faPlus} /> Add a Page</div>
             </div>
 
@@ -129,8 +145,8 @@ export default function WorkSpaces() {
                 <div className="newpage-container">
                     <button className="newpage-button"
                     onClick={async () => {
-                        await createPage(Number(selectWork.id || 1))
-                        await workplacePage(selectWork.id || 1)
+                        await actionCreatePage(Number(workSpaceId))
+                        await actionGetAllPagesWorkSpace(workSpaceId)
                     }}
                     >
                     <FontAwesomeIcon style={{paddingRight: '8px'}} icon={faPlus} /> New page</button>
@@ -139,7 +155,7 @@ export default function WorkSpaces() {
         </div>
             
         <div className="page-container">
-            {selectedPage && <GettingStarted selectedPage={selectedPage} />}
+            {<PageEditor pageName={pageName} pageId={currentPageId} />}
         </div>
     </div>        
 </>
