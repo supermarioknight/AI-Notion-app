@@ -9,7 +9,7 @@ import Notebook from './Notebook.PNG'
 import AI from './aiIcon.PNG'
 
 
-export default function Product() {
+export default function Product({workInProgress}) {
   const [toggleProduct, setToggleProduct] = useState(false) 
   const dropdownRef = useRef(null);
 
@@ -25,8 +25,8 @@ export default function Product() {
           <div className="product-dropdown">
           <div className="product-dropdownmenu">
 
-            <NavLink className="product-details-dropdownmenu">
-              <div className="wiki"><img src={BookIcon} alt="" />
+            <NavLink onClick={workInProgress} className="product-details-dropdownmenu">
+              <div  className="wiki"><img src={BookIcon} alt="" />
                 <div className="product-details-right">
                   Wikis
                   <div className="product-details-info">Centralize your Knowledge</div>
@@ -34,7 +34,7 @@ export default function Product() {
               </div>
             </NavLink>
 
-            <NavLink className="product-details-dropdownmenu">
+            <NavLink onClick={workInProgress} className="product-details-dropdownmenu">
               <div className="wiki"> <img src={Marksman} alt="" />
                 <div  className="product-details-right">
                   Projects
@@ -43,7 +43,7 @@ export default function Product() {
               </div>
             </NavLink>
 
-            <NavLink className="product-details-dropdownmenu">
+            <NavLink onClick={workInProgress} className="product-details-dropdownmenu">
               <div className="wiki"> <img  src={Notebook} alt="" /> 
                 <div className="product-details-right">
                 Docs
@@ -52,7 +52,7 @@ export default function Product() {
             </div>
             </NavLink>
 
-            <NavLink className="product-details-dropdownmenu">
+            <NavLink onClick={workInProgress} className="product-details-dropdownmenu">
               <div className="wiki"> <img src={AI} alt="" />
               <div className="product-details-right">
               IdeaFusion AI
@@ -61,11 +61,11 @@ export default function Product() {
             </div>
             </NavLink>
 
-            <NavLink className="product-details-dropdownmenu">Template Gallery
+            <NavLink onClick={workInProgress} className="product-details-dropdownmenu">Template Gallery
             <div className="product-details-info">Setups to Get you started</div>
             </NavLink>
 
-            <NavLink className="product-details-dropdownmenu">Customer Stories
+            <NavLink onClick={workInProgress} className="product-details-dropdownmenu">Customer Stories
             <div className="product-details-info">See how teams use Big Brain</div>
             </NavLink>
           </div>

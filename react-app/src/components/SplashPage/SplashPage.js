@@ -27,13 +27,13 @@ export default function SplashPage() {
 
           <img className="title-img" src={NotionTitle} alt="" />  
 
-          <div className="title-caption">Idea Fusion is the connected workspace where better, faster work happens and ideas come to life.</div>
+          <div className="title-caption">AIdea is the connected workspace where better, faster work happens and ideas come to life.</div>
 
-          <button onClick={handleSignupClick} className="splash-signup">Get Idea Fusion Free <span>&#x2192;</span> </button>
+          <button onClick={handleSignupClick} className="splash-signup">Get AIdea Free <span>&#x2192;</span> </button>
 
           <img style={{marginTop: 20}} src={SplashImage} alt="" />
 
-          <div className="millions">Millions run on Idea Fusion every day</div>
+          <div className="millions">Millions run on AIdea every day</div>
 
           <div className="powering">Powering the world's best teams, from next-generation startups to established enterprises.</div>
 

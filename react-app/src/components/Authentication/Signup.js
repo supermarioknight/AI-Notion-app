@@ -80,7 +80,7 @@ export default function Signup() {
             </label>
             <input 
             className="login-input" 
-            type="text" 
+            type="password" 
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeHolder="Enter your password.."
@@ -90,6 +90,7 @@ export default function Signup() {
 
           <button className="login-submit">Submit</button>
           <button onClick={handleDemo} className="login-submit">Demo User</button>
+          <button onClick={() => navigate("/")} className="login-submit">Return to Homepage</button>
 
         </form>
 

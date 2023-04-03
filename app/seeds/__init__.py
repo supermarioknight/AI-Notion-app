@@ -3,7 +3,7 @@ from .users import seed_users, undo_users
 from .workspaces import seed_workspaces, undo_workspaces
 from .templates import seed_templates, undo_templates
 from .pages import seed_pages, undo_pages
-from .blocks import seed_blocks, undo_blocks
+
 
 from app.models.db import db, environment, SCHEMA
 
@@ -24,13 +24,13 @@ def seed():
         undo_workspaces()
         undo_templates()
         undo_pages()
-        undo_blocks()
+        
 
     seed_users()
     seed_workspaces()
     seed_templates()
     seed_pages()
-    seed_blocks()
+    
     
     # Add other seed functions here
 
@@ -42,5 +42,5 @@ def undo():
     undo_workspaces()
     undo_templates()
     undo_pages()
-    undo_blocks()
+    
     # Add other undo functions here

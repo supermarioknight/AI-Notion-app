@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from app.models import Workspace, User, Page, Block
+from app.models import Workspace, User, Page 
 from app.models.db import db
 # from os import environ
 # environment = environ.get('FLASK_ENV')

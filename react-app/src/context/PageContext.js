@@ -1,58 +1,74 @@
-import React, { useReducer, useState, useContext, createContext } from "react";
+import React, { useReducer, useContext, createContext } from "react";
 
 export const PageContext = createContext()
 export const usePagesAPI = () => useContext(PageContext)
 
 const initialState = {
     pages: [],
-    selectedPage: 1,
-    pageContent: []
+    currentPageId: 1,
+    currentPageContent: []
   };
 
 const pageReducer = (state, action) => {
     switch (action.type) {
-        case "GET_PAGE_CONTENT":
-          return {...state, pageContent: action.payload}
-        case "DELETE_PAGE":
-          return {...state, pages: state.pages.filter((page) => page.id !== action.payload)}
+        case 'GET_CURRENT_PAGE':
+          return { ...state, currentPageId: action.payload };
+
+        case 'GET_ALL_PAGES_WORKSPACE':
+          return {...state, pages: action.payload}
+        
+        case 'GET_CURRENT_PAGE_CONTENT':
+          return {...state, currentPageContent: [...state.currentPageContent, action.payload]}
+        
         case "UPDATE_PAGE":
-          return {...state, pages: state.pages.map((page) => page.id === action.payload.id)}
+          if (!Array.isArray(action.payload)) {
+            return state;
+          }
+          return { ...state, pages: [...state.pages, ...action.payload] };
+
+        case "DELETE_PAGE":
+          return {
+            ...state,
+            pages: Array.isArray(state.pages) ? state.pages.filter(page => page._id !== action.payload) : [],
+          };
+
         case "CREATE_PAGE":
-          return{...state, pages: [...state.pages, action.payload]}  
-        case "SET_SELECTED_PAGE":
-          return {...state, selectedPage: action.payload };
+            if (!Array.isArray(action.payload)) {
+              return state;
+            }
+            return { ...state, pages: [...state.pages, ...action.payload] };
+        
         case "UPDATE_PAGE_CONTENT": 
-          return {...state, pageContent: action.payload}
+          return {...state, currentPageContent: action.payload}
         default:
         throw new Error(`Unhandled action type: ${action.type}`);
     }
 };
 
-async function fetchData(url, options) {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error(`HTTP error ${response.status}`);
-    }
-    return await response.json();
-  }
-  
 
 
 export default function PageProvider({ children }) {
     const [state, dispatch] = useReducer(pageReducer, initialState);
 
-    const setSelectedPage = (page) => {
-      dispatch({ type: "SET_SELECTED_PAGE", payload: page });
+    const actionSetCurrentPage = id => {
+      dispatch({ type: 'GET_CURRENT_PAGE', payload: id });
     };
 
-    const getPageContent = async (id) => {
-      const data = await fetchData(`/api/pages/${id}`); // No need to call response.json() again
-      dispatch({type: "GET_PAGE_CONTENT", payload: data});
-      
-  }
+    const actionGetCurrentPageContent = async (pageId) => {
+      const response = await fetch(`/api/pages/${pageId}`);
+      const data = await response.json();
 
-    const deletePage = async (id) => {
-      const response = await fetchData(`/api/pages/${id}`, {
+      dispatch({ type: "GET_CURRENT_PAGE_CONTENT", payload: data })
+    }
+
+    const actionGetAllPagesWorkSpace = async (workspaceId) => {
+      const response = await fetch(`/api/workspaces/${workspaceId}/pages`);
+      const data = await response.json();
+      dispatch({ type: "GET_ALL_PAGES_WORKSPACE", payload: data });
+    };
+
+    const actionDeletePage = async (id) => {
+      await fetch(`/api/pages/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -61,68 +77,51 @@ export default function PageProvider({ children }) {
       dispatch({type: "DELETE_PAGE", payload: id})
     }
 
-    const updatePage = async (id, name) => {
-      const response = await fetchData(`/api/pages/${id}`, {
+    const actionUpdatePage = async (id, name, content = []) => {
+      const response = await fetch(`/api/pages/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: id, // Use 'id' instead of 'pageId'
-          name: name,
-        })
+          name,
+          content
+        }),
       });
-      dispatch({type: "UPDATE_PAGE", payload: response})
-    };
+      const data = await response.json();
 
-    const createPage = async (workspaceId, blocks = []) => {
-        const response = await fetchData(`/api/pages/`, {
-          method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              workspace_id: workspaceId,
-              name: "New Page",
-              blocks: blocks
-            })
-          });
+      dispatch({ type: "UPDATE_PAGE", payload: data });
+    }
 
 
-        dispatch({ type: "CREATE_PAGE", payload: response });
-        
-    };
-
-    const updatePageContent = async (id, content) => {
-      const response = await fetchData(`/api/pages/${id}/pages/`, {
-        method: "PUT",
+    const actionCreatePage = async (workspaceId) => {
+      const response = await fetch(`/api/pages/`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: id,
-          content: content
-        })
-      })
-      dispatch({type: "UPDATE_PAGE_CONTENT", payload: content})
-      await getPageContent(response.id);
-    } 
+          workspace_id: workspaceId,
+          name: "Untitled",
+        }),
+      });
+      const data = await response.json();
+      dispatch({ type: "CREATE_PAGE", payload: data });
+    };
 
-  
-    // Define your action creators and async API calls here
   
 return (
       <PageContext.Provider
         value={{
-        getPageContent,
-        deletePage,
-        createPage,
-        updatePage,
-        allPages: state.pages,
-        setSelectedPage, // Add setSelectedPage here
-        selectedPage: state.selectedPage, // Expose selectedPage from state
-        pageContent: state.pageContent,
-        updatePageContent
+          actionSetCurrentPage,
+          actionDeletePage,
+          actionCreatePage,
+          actionGetAllPagesWorkSpace,
+          actionGetCurrentPageContent,
+          actionUpdatePage,
+          pages: state.pages,
+          currentPageId: state.currentPageId,
+          currentPageContent: state.currentPageContent
           // Expose the state and action creators here
         }}
       >

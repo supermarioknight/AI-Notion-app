@@ -5,7 +5,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './Download.css'
 
-export default function Download() {
+export default function Download({workInProgress}) {
   const [toggleDownload, setToggleDownload] = useState(false)
 
   const dropdownRef = useRef(null);
@@ -21,8 +21,8 @@ export default function Download() {
             <div className="download-dropdown-container">
                 <div className="download-dropdown-menu">
 
-                    <NavLink className="download-link">iOS & Android</NavLink>
-                    <NavLink className="download-link">Mac & Windows</NavLink>
+                    <NavLink onClick={workInProgress} className="download-link">iOS & Android</NavLink>
+                    <NavLink onClick={workInProgress} className="download-link">Mac & Windows</NavLink>
 
                 </div>
             </div>

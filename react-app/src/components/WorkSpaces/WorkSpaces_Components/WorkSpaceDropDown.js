@@ -1,37 +1,34 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { faSearch, faClock, faGear, faUsers, faFolderOpen, faTrashCan, faPlus, faArrowUp, faArrowDown, faEllipsisH, faFile, faEdit } from '@fortawesome/free-solid-svg-icons';
 
-import { useWorkspacesAPI } from '../../../context/Workspaces';
+import { useWorkspacesAPI } from '../../../context/WorkspacesContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch} from 'react-redux';
 import {logout, authenticate} from '../../../store/session'
 import { useNavigate } from 'react-router-dom';
 
-export default function WorkSpaceDropDown() {
+export default function WorkSpaceDropDown({workspaces}) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {
-        workspaces,
-        selectedWorkspace,
-        createWorkspace,
-        editWorkspace,
-        deleteWorkSpace,
-        fetchAllWorkSpaces,
-        fetchWorkspaceById,
-        fetchAllPagesbyWorkPlaceId,
-        setSelectWork,
-        selectWork,
-        pages,
-        workplacePage
-        
+        actionGetAllWorkspaces,
+        actionEditWorkspace,
+        actionDeleteWorkspace,
+        actionCreateWorkspace,
+        actionSetWorkspaceId,
+        actionGetWorkPlaceById,
+        workSpaceId,
+        currentWorkspace
+
     } = useWorkspacesAPI();
 
     const [editingWorkspaceId, setEditingWorkspaceId] = useState(null);
-    const [editingWorkspaceName, setEditingWorkspaceName] = useState('');
+    const [editWorkName, setEditWorkName] = useState('');
     const [toggleWorkSpace, setToggleWorkSpace] = useState(false)
     const [showCreateWorkspaceForm, setShowCreateWorkspaceForm] = useState(false);
-    const [newWorkspaceName, setNewWorkspaceName] = useState('');
-    const [activeWorkSpace, setActiveWorkSpace] = useState(null)
+    const [workSpaceName, setWorkSpaceName] = useState('');
+    const [errors, setErrors] = useState([])
+    const [editErrors, setEditErrors] = useState([])
 
     const handleLogout = async () => {
         dispatch(logout()).then(() => {
@@ -39,36 +36,6 @@ export default function WorkSpaceDropDown() {
         }).then(() => navigate('/'));
     };
 
-    const handleWorkSpaceChange = (e) => {
-    setEditingWorkspaceName(e.target.value);
-    };
-
-    const handleWorkspaceSubmit = (e, workspace) => {
-        e.preventDefault();
-                
-        editWorkspace(workspace.id, editingWorkspaceName);
-        setEditingWorkspaceId(null);
-        setEditingWorkspaceName('');
-        // update selectWork state if the selected workspace is being edited
-        if (selectedWorkspace.id === workspace.id) {
-            setSelectWork({ ...selectedWorkspace, name: editingWorkspaceName });
-        }
-    };
-
-    const handleDeleteWorkSpace = async (e, id) => {
-    e.preventDefault();
-    await deleteWorkSpace(id);
-    await fetchAllWorkSpaces();
-    const firstWorkspace = workspaces[0];
-    setSelectWork(firstWorkspace.id);
-    };
-
-    const handleEditWorkspaceClick = (event, workspace) => {
-        event.stopPropagation();
-        setEditingWorkspaceId(workspace.id);
-        setEditingWorkspaceName(workspace.name);
-    };
-    
     
     return (
         <div className="workspace-user" 
@@ -76,30 +43,42 @@ export default function WorkSpaceDropDown() {
             onMouseLeave={() => setToggleWorkSpace(false)}
             >
 
-            {toggleWorkSpace && (
+        { (toggleWorkSpace) && (
             <div className="workspaces-dropdown-container">
-                {workspaces.map((ele, index) => (
-                    
+                {Array.isArray(workspaces) && workspaces.map((ele, index) => (
                     <div
                     key={ele.id}
                     onClick={async () => {
-                        await setSelectWork(ele);
-                        await workplacePage(ele.id);
+                        await actionSetWorkspaceId(ele.id);
+                        await actionGetWorkPlaceById(ele.id);
                       }}
 
                     className="workspaces-dropdown-menu"
                     >
-                    {editingWorkspaceId === ele.id ? (
-                        <form onSubmit={(e) => handleWorkspaceSubmit(e, ele)}>
+                    {editingWorkspaceId === ele.id 
+                    ? (
+                        <form onSubmit={ async (e) => {
+                            e.preventDefault();
+                            if (editWorkName.trim() === '') {
+                                await setEditErrors(['Workspace name cannot be empty']);
+                            } else {
+                                await setEditErrors([]);
+                                await actionEditWorkspace(ele.id, editWorkName);
+                                await setEditingWorkspaceId(null);
+                                await setEditWorkName('');
+                            }
+                        }}>
                         <input
                             type="text"
-                            value={editingWorkspaceName}
-                            onChange={(e) => handleWorkSpaceChange(e)}
-                            onBlur={() => setEditingWorkspaceId(ele.id)}
+                            value={editWorkName}
+                            onChange={(e) => setEditWorkName(e.target.value)}
                         />
+                        {editErrors.length > 0 && (
+                                <div className="error-message">{editErrors.join(', ')}</div>
+                        )}
                     </form>
-
-                    ) : (
+                    ) 
+                    : (
                     <span className="workspace-names">
                         {ele.name}
                         <span style={{ paddingRight: 10 }}>
@@ -107,13 +86,24 @@ export default function WorkSpaceDropDown() {
                             icon={faEdit}
                             key={ele.id}
                             style={{ paddingRight: 5 }}
-                            onClick={(event) => handleEditWorkspaceClick(event, ele)}
+                            onClick={async (e) => {
+                                if (editingWorkspaceId !== ele.id) {
+                                    await setEditingWorkspaceId(ele.id);
+                                    await setEditWorkName(ele.name);
+                                    await actionGetAllWorkspaces();
+                                }
+                            }}
                         />
+
                         <FontAwesomeIcon icon={faTrashCan} 
                         key={ele.id}
-                        onClick={(event) => {
-                            event.stopPropagation();
-                            handleDeleteWorkSpace(event, ele.id);
+                        onClick={async (e) => {
+                            e.stopPropagation();
+                            e.preventDefault()
+                            await actionDeleteWorkspace(ele.id);
+                            await actionGetAllWorkspaces();
+                            const firstWorkspace = workspaces[0];
+                            await actionSetWorkspaceId(firstWorkspace.id);
                         }}
                         />
                         </span>
@@ -121,36 +111,53 @@ export default function WorkSpaceDropDown() {
                     )}
                 </div>
                 ))}
-                    <div onClick={() => setShowCreateWorkspaceForm(!showCreateWorkspaceForm)} className="create-work">Create Work Space</div>
+                    <div 
+                    onClick={() => setShowCreateWorkspaceForm(!showCreateWorkspaceForm)} 
+                    className="create-work"
+                    
+                    >
+                    Create Work Space
+                    </div>
                     {showCreateWorkspaceForm && (
                         <form
                             onSubmit={async (e) => {
-                            e.preventDefault();
-                            const newWork = await createWorkspace(newWorkspaceName);
-                            await setNewWorkspaceName(newWorkspaceName);
-                            await setShowCreateWorkspaceForm(false);
-                            await setSelectWork(newWork)
+                                e.preventDefault();
+                                if (workSpaceName.trim() === '') {
+                                    setErrors(['Workspace name cannot be empty']);
+                                } else {
+                                    setErrors([]);
+                                    await actionCreateWorkspace(workSpaceName);
+                                    await setShowCreateWorkspaceForm(false);
+                                    await actionGetAllWorkspaces();
+                                }
                             }}>
-
+                                
                             <input
                             className="workspace-input"
                             type="text"
-                            value={newWorkspaceName}
-                            onChange={async (e) => {
-                                await setNewWorkspaceName(e.target.value)
-                                
-                            }}
+                            value={workSpaceName}
+                            onChange={async (e) => {setWorkSpaceName(e.target.value)}}
                             placeholder="Enter workspace name"
                             />
+                            
+                            {errors.length > 0 && (
+                                <div className="error-message">{errors.join(', ')}</div>
+                            )}
 
-                            <button className="workspace-create" type="submit">Create</button>
+                            <button 
+                            className="workspace-create" 
+                            type="submit"
+                            
+                            >
+                                Create
+                            </button>
                         </form>
                         )}
                     <div onClick={handleLogout} className="workspace-logout">Log out</div>
                 </div>
             )}
                 
-                {selectWork?.name ? selectWork.name : "Personal"} 
+                {currentWorkspace.name ? currentWorkspace.name : "Personal"}
                 <span>
                     <button>
                     <FontAwesomeIcon icon={faArrowUp} />
