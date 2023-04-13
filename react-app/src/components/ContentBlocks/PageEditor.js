@@ -1,48 +1,77 @@
-import React, { useState, useEffect, useCallback} from 'react';
-import './Templates.css'
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import './Templates.css';
+import { useNavigate } from 'react-router-dom';
+
+import ReactQuill from 'react-quill';
 import { usePagesAPI } from '../../context/PageContext';
-import parse from 'html-react-parser';
-import ReactQuill, { Quill } from 'react-quill';
 
 
 
+export default function PageEditor({pageName, pageId, workSpaceId }) {
+  const [content, setContent] = useState('');
+  const [loadingButton, setLoadingButton] = useState('');
 
-export default function PageEditor({pageId, pageName}) {
-const [content, setContent] = useState([])
+  const gif = "https://media2.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.gif?cid=ecf05e47zs6ebu5pie6eahdgvf3tsbnh68yvrxlvig6onq43&rid=giphy.gif&ct=g"
 
+  const quillRef = useRef(null);
+  const navigate = useNavigate()
+
+
+  const {
+    actionSummarizePage,
+    actionGetAllPagesWorkSpace,
+    actionTablePage,
+    actionCodePage,
+    actionStoryPage,
+    actionJournalPage,
+    actionTranslatePage,
+    actionCoverPage,
+    actionOutlinePage,
+    actionAnalyzePage,
+    actionSmartPage,
+    actionBlogPage,
+    actionHumblePage,
+    actionThankYou,
+    actionUpdatePage,
+    actionCreatePage,
+    currentPageId,
+    currentPageContent
+  } = usePagesAPI()
+
+  const getHTML = (quillRef) => {
+    return quillRef.current.getEditor().root.innerHTML;
+  };
   
-  const [timeoutId, setTimeoutId] = useState(null);
-  const [isContentUpdated, setIsContentUpdated] = useState(false);
-  const inactivityDelay = 5000;
+  
 
-  const handleContentChange = useCallback((value) => {
-    console.log(value, 'content')
-    setContent(value);
-    setIsContentUpdated(true);
-  }, []);
+  const handleContentChange = useCallback(
+    (value) => {
+      setContent(value);
+    },
+    [pageId, pageName]
+  );
+
+  const handleSubmit = async () => {
+    try {
+      await fetch(`/api/pages/${pageId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: pageName,
+          content: content,
+        }),
+      });
+    } catch (error) {
+      console.error('Error updating page content:', error);
+    }
+  };
 
   useEffect(() => {
     getPageContent();
+    
   }, [pageId]);
-
-  useEffect(() => {
-    if (isContentUpdated) {
-      // Clear the existing timer
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-
-      // Start a new timer when content changes
-      const newTimeoutId = setTimeout(() => {
-        savePageContent();
-      }, inactivityDelay);
-
-      setTimeoutId(newTimeoutId);
-    }
-  }, [content]);
-
-console.log(content)
-  
 
   const getPageContent = async () => {
     try {
@@ -55,70 +84,167 @@ console.log(content)
     }
   };
 
+  const handleSummarize = async (event) => {
+    event.preventDefault();
+    const editorContent = getHTML(quillRef);
   
-  
-  const savePageContent = async () => {
-    try {
-      const currentResponse = await fetch(`/api/pages/${pageId}`);
-      const currentData = await currentResponse.json();
-      const currentContent = currentData.content;
-  
-      let updatedContent;
-  
-      if (currentContent && Array.isArray(currentContent.ops)) {
-        updatedContent = {
-          ops: [
-            ...currentContent,
-            ...content,
-          ],
-        };
-      } else {
-        updatedContent = content;
-      }
-  
-      await fetch(`/api/pages/${pageId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: pageName,
-          content: updatedContent,
-        }),
-      });
-    } catch (error) {
-      console.error('Error updating page content:', error);
-    }
+    setLoadingButton('summarize');
+    await actionSummarizePage(pageId, pageName, editorContent);
+    await getPageContent();
+    setLoadingButton('');
   };
 
-  useEffect(() => {
-    const quill = document.querySelector('.ql-editor');
-    if (quill) {
-      quill.addEventListener('keydown', handleSlashCommand);
-    }
+  const handleTable = async (event) => {
+    event.preventDefault()
+    const editorContent = getHTML(quillRef)
 
-    return () => {
-      if (quill) {
-        quill.removeEventListener('keydown', handleSlashCommand);
-      }
-    };
-  }, []);
+    setLoadingButton('idiot')
+    await actionTablePage(pageId, pageName, editorContent)
+    await getPageContent();
+    setLoadingButton('')
+  }
 
-  const handleSlashCommand = (event) => {
-    if (event.key === '/') {
-      const command = prompt('Enter a command (e.g. link)');
+  const handleStoryTime = async (event) => {
+    event.preventDefault()
+    const topic = prompt("Enter a topic for your story")
+    const editorContent = getHTML(quillRef)
 
-    }
-  };
+    setLoadingButton('story')
+    await actionStoryPage(pageId, pageName, editorContent, topic)
+    await getPageContent();
+    setLoadingButton('')
+  }
 
+  const handleCodeForMe = async (event) => {
+    event.preventDefault()
+    const editorContent = getHTML(quillRef)
+    const codeQuestion = prompt("What would you like me to code for you?")
+
+    setLoadingButton('code')
+    await actionCodePage(pageId, pageName, editorContent, codeQuestion)
+    await getPageContent();
+    setLoadingButton('')
+  }
+
+  
+  const handleJournal = async (event) => {
+    event.preventDefault()
+    const editorContent = getHTML(quillRef)
+    const topic = prompt("Enter a topic for your story")
+
+    setLoadingButton("journal")
+    await actionJournalPage(pageId, pageName, editorContent, topic)
+    await getPageContent();
+    setLoadingButton('')
+  }
+
+  const handleHumble = async (event) => {
+    event.preventDefault()
+    const editorContent = getHTML(quillRef)
+    await actionHumblePage(pageId, pageName, editorContent)
+    await getPageContent();
+  }
+
+  const handleCover = async (event) => {
+    event.preventDefault()
+    const editorContent = getHTML(quillRef)
+    const topic = prompt("Enter a company, position, and your current tech stack.")
+    await actionCoverPage(pageId, pageName, editorContent, topic)
+    await getPageContent();
+  }
+
+  const handleTranslate = async (event) => {
+    event.preventDefault()
+    const language = prompt("Enter the language you want the content to be translated into")
+    const editorContent = getHTML(quillRef)
+    await actionTranslatePage(pageId, pageName, editorContent, language)
+    await getPageContent();
+  }
+
+  const handleSmart = async (event) => {
+    event.preventDefault()
+    const editorContent = getHTML(quillRef)
+
+    setLoadingButton("smart")
+    await actionSmartPage(pageId, pageName, editorContent)
+    await getPageContent();
+    setLoadingButton("")
+  }
+
+  const handleOutline = async (event) => {
+    event.preventDefault()
+    const editorContent = getHTML(quillRef)
+
+    setLoadingButton("outline")
+    await actionOutlinePage(pageId, pageName, editorContent)
+    await getPageContent();
+    setLoadingButton("")
+  }
+
+  const handleBlog = async (event) => {
+    event.preventDefault()
+    const topic = prompt("Enter a topic for your blog")
+    const editorContent = getHTML(quillRef)
+
+    setLoadingButton("blog")
+    await actionBlogPage(pageId, pageName, editorContent, topic)
+    await getPageContent();
+    setLoadingButton('')
+  }
+
+  const handleThankYou = async (event) => {
+    event.preventDefault()
+    const editorContent = getHTML(quillRef)
+    const topic = prompt("Enter Company and position you applied for")
+    await actionThankYou(pageId, pageName, editorContent, topic)
+    await getPageContent();
+  }
 
   return (
-    <div>
-      <ReactQuill
-        value={content}
-        onChange={handleContentChange}
-      />
+    pageId && (
+      <div>
+        <div className="page-topsection">
+        <h1>{pageName}</h1>
+        
+        <button onClick={() => navigate("/home/faq")} className="button-nav">Button Guide</button>
+        </div>
+        <div className="AI-container">
 
-    </div>
+          <button onClick={handleSummarize} className="ai-buttons">{loadingButton === 'summarize' ? <img src={gif} alt="Loading..." className="loading-gif" /> : "Summarize Me" }</button>
+
+          <button onClick={handleStoryTime} className="ai-buttons">{loadingButton === 'story' ? <img src={gif} alt="Loading..." className="loading-gif" /> : "Story Time" }</button>
+
+          <button onClick={handleSmart} className="ai-buttons">{loadingButton === 'smart' ? <img src={gif} alt="Loading..." className="loading-gif" /> : "Make Me Smart" }</button>
+
+          <button onClick={handleTable} className="ai-buttons">{loadingButton === 'idiot' ? <img src={gif} alt="Loading..." className="loading-gif" /> : "I'm a idiot" }</button>
+
+          <button onClick={handleCodeForMe} className="ai-buttons">{loadingButton === 'code' ? <img src={gif} alt="Loading..." className="loading-gif" /> : "Code for Me" }</button>
+
+          <button onClick={handleOutline} className="ai-buttons">{loadingButton === 'outline' ? <img src={gif} alt="Loading..." className="loading-gif" /> : "Outline Me" }</button>
+
+          <button onClick={handleBlog} className="ai-buttons">{loadingButton === 'blog' ? <img src={gif} alt="Loading..." className="loading-gif" /> : "Blog" }</button>
+
+          <button onClick={handleJournal} className="ai-buttons">{loadingButton === 'journal' ? <img src={gif} alt="Loading..." className="loading-gif" /> : "Journal Prompt" }</button>
+
+          <button onClick={handleTranslate} className="ai-buttons">{loadingButton === 'translate' ? <img src={gif} alt="Loading..." className="loading-gif" /> : "Translate Me" }</button>
+
+          <button onClick={handleCover} className="ai-buttons">{loadingButton === 'cover' ? <img src={gif} alt="Loading..." className="loading-gif" /> : "Cover Letter" }</button>
+
+          <button className="ai-buttons">{loadingButton === 'analyze' ? <img src={gif} alt="Loading..." className="loading-gif" /> : "Analyze" }</button>
+
+          <button onClick={handleHumble} className="ai-buttons">{loadingButton === 'humble' ? <img src={gif} alt="Loading..." className="loading-gif" /> : "Humble Me" }</button>
+
+          <button onClick={handleThankYou} className="ai-buttons">{loadingButton === 'thankyou' ? <img src={gif} alt="Loading..." className="loading-gif" /> : "Thank You Note" }</button>
+        </div>
+        
+        <ReactQuill
+          ref={quillRef}
+          value={content}
+          onChange={handleContentChange}
+          className="quill-hidden"
+        />
+        <button onClick={handleSubmit} className="ai-buttons" >Save</button>
+      </div>
+    )
   );
 }

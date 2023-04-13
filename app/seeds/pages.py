@@ -13,11 +13,17 @@ def seed_pages():
                     {"insert": "\n"},
                     {"insert": "Here are the basics:\n"},
                     {"insert": "Click anywhere and just start typing\n"},
-                    {"insert": "Hit / to see all the types of content you can add such as headers, code-blocks, to-do-lists, kanban-boards, tables\n"},
-                    {"insert": "See the ⋮⋮ to the left of this text on hover? Click and drag to move this line\n"},
+                    {"insert": "See the buttons up top? You can use AIdea to make your workflow easier.\n"},
                     {"insert": "Click the + New Page button at the bottom of your sidebar to add a new page\n"},
                     {"insert": "Click templates in your sidebar to get started with pre-built pages\n"},
-                    {"insert": "Press space to give the AIdea AI a spin"}
+                    {"insert": "Press '/' to see a list of all AIdea commands to have the AI work for you.\n"},
+                    {"insert": "Summarize will summarize the content on your page in a digestable format.\n"},
+                    {"insert": "Story Time will have AIdea create a story for you based on the topic you choose in the prompt\n"},
+                    {"insert": "Improve Me will improve your current page content and make it sound much better.\n"},
+                    {"insert": "I'm a idiot will help you create content that even a child can understand based on your page content.\n"},
+                    {"insert": "Code for me will create code for you based on the parameters of the page.\n"},
+                    {"insert": "Outline will create an outline of the content you have so far.\n"},
+                    {"insert": "Harness the power of AIdea and you never have to think again."},
                 ]
             }
         },
@@ -42,8 +48,9 @@ def seed_pages():
                 "ops": [
                     {"insert": "Code Block Template\n", "attributes": {"header": 1}},
                     {"insert": "\n"},
-                    {"insert": "console.log('Hello World')\n", "attributes": {"code": True}},
-                    {"insert": "def passcapstone(feature1, feature2):\n", "attributes": {"code": True}},
+                    {"insert": "I would like to code Hello World\n", "attributes": {"code": True}},
+                    {"insert": "Can you help me create a function that sums up everything in an array?\n", "attributes": {"code": True}},
+                    {"insert": "Can you show me code that explains how to use the filter javascript array method?\n", "attributes": {"code": True}},
                 ]
             }
         },
@@ -61,23 +68,19 @@ def seed_pages():
                     {"insert": "/Writers Block: Will give you a random AIdea to help with your blocked process\n"},
                     {"insert": "/Outline: Will create an outline for any subject or topic of your choice that you're writing about. \n"},
                     {"insert": "/Brain Dead: When you don't want to think anymore and just let AI do everything for you. \n"},
-                    {"insert": "Harness the power of AIdea and you never have to think again."},
+                    
                 ]
             }
         },
         {
             'workspace_id': 1,
-            'name': 'AIdea Revision',
+            'name': 'Journal Prompt',
             'content': {
                 "ops": [
-                    {"insert": "AIdea can revise and clean up everything from your notes, to your resumes, and a lot more. \n", "attributes": {"header": 1}},
+                    {"insert": "AIdea can Generate Journal Prompts for you. \n", "attributes": {"header": 1}},
                     {"insert": "\n"},
-                    {"insert": "Aidea will dramatically make whatever you're working on sound a lot better.\n"},
-                    {"insert": "So that you can spend your time just jotting out chaotic ideas.\n"},
-                    {"insert": "Just let AIdea handle the heavy lifting of making you actually sound impressive.\n"},
-                    {"insert": "Press the '/' Key\n"},
-                    {"insert": "Enter 'Improve Me'\n"},
-                    {"insert": "And watch as it creates a story for you on this page"}
+                    {"insert": "If you click the journal prompt button it will generate a random journal prompt for you.\n"},
+                    {"insert": "This should help you create journals with ease without having to think about what to write about."},
                 ]
             }
         },

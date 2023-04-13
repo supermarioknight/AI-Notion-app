@@ -8,7 +8,7 @@ import { authenticate } from './store/session';
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { useWorkspacesAPI } from './context/WorkspacesContext';
-
+import FAQ from './components/ContentBlocks/FAQ';
 
 function App() {
   const dispatch = useDispatch()
@@ -30,7 +30,7 @@ function App() {
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/signup" element={<Signup/>}></Route>
           <Route path="/home" element={<WorkSpaces/>}></Route>
-          
+          <Route path="/home/faq" element={<FAQ/>} ></Route>
         </Routes>
         )}
     </>
