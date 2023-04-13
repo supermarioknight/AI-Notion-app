@@ -7,7 +7,7 @@ import { useDispatch} from 'react-redux';
 import {logout, authenticate} from '../../../store/session'
 import { useNavigate } from 'react-router-dom';
 
-export default function WorkSpaceDropDown({workspaces}) {
+export default function WorkSpaceDropDown({workspaces, currentWorkspace}) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {
@@ -18,7 +18,7 @@ export default function WorkSpaceDropDown({workspaces}) {
         actionSetWorkspaceId,
         actionGetWorkPlaceById,
         workSpaceId,
-        currentWorkspace
+        
 
     } = useWorkspacesAPI();
 
@@ -35,6 +35,7 @@ export default function WorkSpaceDropDown({workspaces}) {
             dispatch(authenticate());
         }).then(() => navigate('/'));
     };
+    
 
     
     return (
@@ -157,7 +158,8 @@ export default function WorkSpaceDropDown({workspaces}) {
                 </div>
             )}
                 
-                {currentWorkspace.name ? currentWorkspace.name : "Personal"}
+                {currentWorkspace?.name ? currentWorkspace.name : "My Workspace"}
+
                 <span>
                     <button>
                     <FontAwesomeIcon icon={faArrowUp} />

@@ -28,6 +28,7 @@ Mako = "==1.1.4"
 pip = "*"
 install = "*"
 quill-delta = {extras = ["html"], version = "*"}
+openai = "==0.27.0"
 
 [dev-packages]
 

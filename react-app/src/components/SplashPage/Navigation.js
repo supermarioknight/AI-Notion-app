@@ -10,7 +10,7 @@ import Resources from './Navigation/Resources/Resources';
 import { login } from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
+import AI from './Notion_AI.png'
 
 export default function Navigation() {
   const dispatch = useDispatch()
@@ -35,7 +35,7 @@ export default function Navigation() {
         <div className="leftnav-container">
           <NavLink to="/" className="splash-navlink" >
             <div class="logo">
-                AIdea
+                <img style={{width: 45, height: 45}} src={AI} alt="" />
             </div>
           </NavLink>
           <Product workInProgress={workInProgress}/>

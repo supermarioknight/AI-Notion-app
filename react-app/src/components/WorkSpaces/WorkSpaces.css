@@ -15,7 +15,10 @@
     flex-grow:1;
     box-sizing: border-box;
 }
-  
+
+.activer {
+    background-color: #ebebeb;
+}
 
 .dashboard-container:hover {
     border-right: 1px solid #D0D0D0;
@@ -242,3 +245,5 @@
 .header {
     font-family: 'M PLUS Rounded 1c', sans-serif;
 }
+
+

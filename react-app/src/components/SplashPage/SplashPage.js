@@ -8,6 +8,7 @@ import SplashImage from './SplashImage.PNG'
 import Companies from './companies.PNG'
 import { authenticate } from '../../store/session'
 import { useDispatch } from 'react-redux'
+import AI from './Notion_AI.png'
 
 export default function SplashPage() {
   const dispatch = useDispatch()

@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
 
     workspaces = db.relationship("Workspace", back_populates="users")
-
+    
 
     @property
     def password(self):
@@ -101,5 +101,7 @@ class Template(db.Model):
             'name': self.name,
             'content': self.content
         }
+    
+
         
 
