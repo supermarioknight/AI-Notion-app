@@ -141,24 +141,33 @@ export default function PageEditor({pageName, pageId, workSpaceId }) {
   const handleHumble = async (event) => {
     event.preventDefault()
     const editorContent = getHTML(quillRef)
+
+    setLoadingButton("humble")
     await actionHumblePage(pageId, pageName, editorContent)
     await getPageContent();
+    setLoadingButton('')
   }
 
   const handleCover = async (event) => {
     event.preventDefault()
     const editorContent = getHTML(quillRef)
     const topic = prompt("Enter a company, position, and your current tech stack.")
+
+    setLoadingButton("cover")
     await actionCoverPage(pageId, pageName, editorContent, topic)
     await getPageContent();
+    setLoadingButton('')
   }
 
   const handleTranslate = async (event) => {
     event.preventDefault()
     const language = prompt("Enter the language you want the content to be translated into")
     const editorContent = getHTML(quillRef)
+
+    setLoadingButton('translate')
     await actionTranslatePage(pageId, pageName, editorContent, language)
     await getPageContent();
+    setLoadingButton('')
   }
 
   const handleSmart = async (event) => {
@@ -196,8 +205,11 @@ export default function PageEditor({pageName, pageId, workSpaceId }) {
     event.preventDefault()
     const editorContent = getHTML(quillRef)
     const topic = prompt("Enter Company and position you applied for")
+
+    setLoadingButton('thankyou')
     await actionThankYou(pageId, pageName, editorContent, topic)
     await getPageContent();
+    setLoadingButton('')
   }
 
   return (
