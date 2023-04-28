@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from app.models import Workspace, Page, Template
 from app.models.db import db
 import os
-import openai
+import openai 
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -129,6 +129,7 @@ def code_page_by_page_id(id):
         messages=[
                 {"role": "system", "content": "You are a helpful assistant helping the user create code from the content they sends you."},
                 {"role": "user", "content": f"Can you help me code this?: {code}"},
+
 
         ],
         temperature = 1,

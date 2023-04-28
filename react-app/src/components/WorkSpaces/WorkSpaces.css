@@ -69,7 +69,7 @@
 .search {
     border-style: none;
     background-color: #FBFBFA;
-    cursor: pointer;
+    cursor: not-allowed;
     display: flex;
     gap: 10px;
     color: rgba(25, 23, 17, 0.7);

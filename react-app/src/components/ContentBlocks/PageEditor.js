@@ -10,6 +10,7 @@ import { usePagesAPI } from '../../context/PageContext';
 export default function PageEditor({pageName, pageId, workSpaceId }) {
   const [content, setContent] = useState('');
   const [loadingButton, setLoadingButton] = useState('');
+  
 
   const gif = "https://media2.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.gif?cid=ecf05e47zs6ebu5pie6eahdgvf3tsbnh68yvrxlvig6onq43&rid=giphy.gif&ct=g"
 
@@ -63,6 +64,7 @@ export default function PageEditor({pageName, pageId, workSpaceId }) {
           content: content,
         }),
       });
+      await alert("You have successfully saved your Page")
     } catch (error) {
       console.error('Error updating page content:', error);
     }
@@ -218,7 +220,7 @@ export default function PageEditor({pageName, pageId, workSpaceId }) {
         <div className="page-topsection">
         <h1>{pageName}</h1>
         
-        <button onClick={() => navigate("/home/faq")} className="button-nav">Button Guide</button>
+        <button onClick={() => navigate("/tutorial")} className="button-nav">Tutorial / Click Me If You're Lost</button>
         </div>
         <div className="AI-container">
 

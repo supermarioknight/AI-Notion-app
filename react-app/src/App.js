@@ -7,8 +7,10 @@ import WorkSpaces from './components/WorkSpaces/WorkSpaces';
 import { authenticate } from './store/session';
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { useWorkspacesAPI } from './context/WorkspacesContext';
 import FAQ from './components/ContentBlocks/FAQ';
+import Tutorial from './components/Tutorial';
+import NotFound from './components/NotFound';
+
 
 function App() {
   const dispatch = useDispatch()
@@ -31,6 +33,8 @@ function App() {
           <Route path="/signup" element={<Signup/>}></Route>
           <Route path="/home" element={<WorkSpaces/>}></Route>
           <Route path="/home/faq" element={<FAQ/>} ></Route>
+          <Route path="/tutorial" element={<Tutorial />} ></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
         )}
     </>
