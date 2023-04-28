@@ -1,1 +1,67 @@
 /* TODO Add site wide styles */
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+.tutorial-div {
+    border: 2px solid #80bfff;
+    padding: 2%;
+    border-radius: 8px;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+    z-index: 50;
+    height: auto;
+    padding-bottom: 10%;
+    overflow-y:auto
+}
+
+.tutorial-heading {
+    text-decoration: underline;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.tutorial-text {
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.tutorial-front {
+    color: teal
+}
+
+.close-tutorial {
+    text-decoration: none;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    background: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.close-tutorial:hover {
+    background-color: #80bfff
+}
+
+.tutorial-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tutorial-features {
+    font-size: 26px;
+    color: purple;
+    text-decoration: underline;
+}
+
+.workspace-description {
+    margin-bottom: 10px;
+}

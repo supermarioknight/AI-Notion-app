@@ -15,7 +15,7 @@ export default function Signup() {
   const [username, setUserName] = useState("")
   const [errors, setErrors] = useState([])
 
-  if (sessionUser) navigate('/home')
+  if (sessionUser) navigate('/tutorial')
 
   const handleSubmit = async (e) => {
     e.preventDefault();
