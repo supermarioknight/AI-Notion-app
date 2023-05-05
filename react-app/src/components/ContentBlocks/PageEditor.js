@@ -109,6 +109,10 @@ export default function PageEditor({pageName, pageId, workSpaceId }) {
   const handleStoryTime = async (event) => {
     event.preventDefault()
     const topic = prompt("Enter a topic for your story")
+    if (!topic) {
+      alert("You did not enter anything please try again")
+      return
+    }
     const editorContent = getHTML(quillRef)
 
     setLoadingButton('story')
@@ -121,6 +125,10 @@ export default function PageEditor({pageName, pageId, workSpaceId }) {
     event.preventDefault()
     const editorContent = getHTML(quillRef)
     const codeQuestion = prompt("What would you like me to code for you?")
+    if (!codeQuestion) {
+      alert("You did not enter anything please try again")
+      return
+    }
 
     setLoadingButton('code')
     await actionCodePage(pageId, pageName, editorContent, codeQuestion)
@@ -133,6 +141,11 @@ export default function PageEditor({pageName, pageId, workSpaceId }) {
     event.preventDefault()
     const editorContent = getHTML(quillRef)
     const topic = prompt("Enter a topic for your story")
+
+    if (!topic) {
+      alert("You did not enter anything please try again")
+      return
+    }
 
     setLoadingButton("journal")
     await actionJournalPage(pageId, pageName, editorContent, topic)
@@ -155,6 +168,11 @@ export default function PageEditor({pageName, pageId, workSpaceId }) {
     const editorContent = getHTML(quillRef)
     const topic = prompt("Enter a company, position, and your current tech stack.")
 
+    if (!topic) {
+      alert("You did not enter anything please try again")
+      return
+    }
+
     setLoadingButton("cover")
     await actionCoverPage(pageId, pageName, editorContent, topic)
     await getPageContent();
@@ -164,6 +182,11 @@ export default function PageEditor({pageName, pageId, workSpaceId }) {
   const handleTranslate = async (event) => {
     event.preventDefault()
     const language = prompt("Enter the language you want the content to be translated into")
+    if (!language) {
+      alert("You did not enter anything please try again")
+      return
+    }
+
     const editorContent = getHTML(quillRef)
 
     setLoadingButton('translate')
@@ -195,6 +218,10 @@ export default function PageEditor({pageName, pageId, workSpaceId }) {
   const handleBlog = async (event) => {
     event.preventDefault()
     const topic = prompt("Enter a topic for your blog")
+    if (!topic) {
+      alert("You did not enter anything please try again")
+      return
+    }
     const editorContent = getHTML(quillRef)
 
     setLoadingButton("blog")
@@ -207,6 +234,10 @@ export default function PageEditor({pageName, pageId, workSpaceId }) {
     event.preventDefault()
     const editorContent = getHTML(quillRef)
     const topic = prompt("Enter Company and position you applied for")
+    if (!topic) {
+      alert("You did not enter anything please try again")
+      return
+    }
 
     setLoadingButton('thankyou')
     await actionThankYou(pageId, pageName, editorContent, topic)
