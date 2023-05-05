@@ -48,7 +48,8 @@ export default function Navigation() {
         
 
         <div className="rightnav-container">
-          <NavLink onClick={handleDemo} className="splash-navlink" >Request a Demo</NavLink>
+          <NavLink className="splash-navlink" to="https://github.com/bkhoo123">Project Repo / Github</NavLink>
+          {/* <NavLink onClick={handleDemo} className="splash-navlink" >Request a Demo</NavLink> */}
           <NavLink to="/login" className="splash-navlink" >Login</NavLink>
           <NavLink to="/signup" className="try">Sign Up</NavLink>
         </div>
