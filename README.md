@@ -18,6 +18,7 @@ Contents
 - [Database Diagram](#database-diagram)
 
 ## Database Diagram
+![Diagram](https://github.com/bkhoo123/Idea-Fusion/assets/102838003/00036e65-6012-4265-b478-c7a910ece502)
 
 
 [Render.com]: https://render.com/
